@@ -1,0 +1,135 @@
+<mvc:View
+    controllerName="o2c.controller.Payments"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Payments">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="Payment Records" />
+                </contentLeft>
+                <contentRight>
+                    <Select id="payStatusFilter" change=".onFilterChange">
+                        <core:Item key="All" text="All Status" />
+                        <core:Item key="Completed" text="Completed" />
+                        <core:Item key="Partial" text="Partial" />
+                        <core:Item key="Pending" text="Pending" />
+                    </Select>
+                    <Select id="payModeFilter" change=".onFilterChange">
+                        <core:Item key="All" text="All Modes" />
+                        <core:Item key="NEFT" text="NEFT" />
+                        <core:Item key="RTGS" text="RTGS" />
+                        <core:Item key="Cheque" text="Cheque" />
+                        <core:Item key="UPI" text="UPI" />
+                    </Select>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <!-- KPI -->
+                <HBox class="sapUiSmallMarginBottom" wrap="Wrap">
+                    <GenericTile class="sapUiSmallMarginEnd" header="Total Collected">
+                        <TileContent unit="INR">
+                            <NumericContent value="{path: '/payments', formatter: '.getTotalPayments'}"
+                scale="L" valueColor="Good" />
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile class="sapUiSmallMarginEnd" header="Completed Payments">
+                        <TileContent>
+                            <NumericContent value="{= ${/payments}.filter(function(p){return p.PaymentStatus==='Completed';}).length}"
+                                            valueColor="Good" />
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="Partial Payments">
+                        <TileContent>
+                            <NumericContent value="{= ${/payments}.filter(function(p){return p.PaymentStatus==='Partial';}).length}"
+                                            valueColor="Critical" />
+                        </TileContent>
+                    </GenericTile>
+                </HBox>
+
+                <Table id="paymentsTable" items="{/payments}"
+                       noDataText="No payment records found."
+                       growing="true" growingThreshold="15">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="Payment Records ({= ${/payments} ? ${/payments}.length : 0})" />
+                            <ToolbarSpacer />
+                            <Button text="Export" icon="sap-icon://excel-attachment"
+                                    type="Default" press=".onExport" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column><Text text="Payment ID" /></Column>
+                        <Column><Text text="Invoice ID" /></Column>
+                        <Column hAlign="End"><Text text="Amount Paid (₹)" /></Column>
+                        <Column><Text text="Payment Date" /></Column>
+                        <Column hAlign="Center"><Text text="Payment Mode" /></Column>
+                        <Column hAlign="Center"><Text text="Status" /></Column>
+                        <Column hAlign="Center"><Text text="Actions" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active">
+                            <cells>
+                                <ObjectIdentifier title="{PaymentId}" />
+                                <Link text="{InvoiceId}" press=".onInvoiceLink" />
+                                <ObjectNumber number="{path:'AmountPaid', formatter:'.formatCurrency'}"
+                                              state="Success" emphasized="true" />
+                                <Text text="{PaymentDate}" />
+                                <ObjectAttribute text="{PaymentMode}" />
+                                <ObjectStatus text="{PaymentStatus}"
+                                              state="{path:'PaymentStatus', formatter:'.formatStatusState'}" />
+                                <Button icon="sap-icon://receipt" tooltip="View Receipt"
+                                        type="Transparent" press=".onViewReceipt" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+
+        <!-- Receipt Dialog -->
+        <dependents>
+            <Dialog id="receiptDialog" title="Payment Receipt" contentWidth="420px">
+                <content>
+                    <VBox class="sapUiMediumMargin">
+                        <Title text="Payment Receipt" titleStyle="H4" class="sapUiSmallMarginBottom" />
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                            <Label text="Payment ID:" />
+                            <Text id="rcptPayId" text="" />
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                            <Label text="Invoice ID:" />
+                            <Text id="rcptInvId" text="" />
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                            <Label text="Amount Paid:" />
+                            <Text id="rcptAmt" text="" />
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                            <Label text="Payment Date:" />
+                            <Text id="rcptDate" text="" />
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
+                            <Label text="Payment Mode:" />
+                            <Text id="rcptMode" text="" />
+                        </HBox>
+                        <HBox justifyContent="SpaceBetween">
+                            <Label text="Status:" />
+                            <ObjectStatus id="rcptStatus" text="" state="Success" />
+                        </HBox>
+                    </VBox>
+                </content>
+                <endButton>
+                    <Button text="Close" press=".onCloseReceipt" />
+                </endButton>
+            </Dialog>
+        </dependents>
+    </Page>
+</mvc:View>

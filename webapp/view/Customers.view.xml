@@ -1,0 +1,71 @@
+<mvc:View
+    controllerName="o2c.controller.Customers"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Customer Master" showNavButton="true" navButtonPress=".navBack">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="Customer Master Data" />
+                </contentLeft>
+                <contentRight>
+                    <SearchField id="customerSearch" placeholder="Search customers..."
+                                 search=".onSearch" width="250px" liveChange=".onSearch" />
+                    <Button text="New Customer" icon="sap-icon://add-contact"
+                            type="Emphasized" press=".onCreateCustomer" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <Table id="customerTable"
+                   items="{path: '/customers'}"
+                   mode="SingleSelectLeft"
+                   selectionChange=".onCustomerSelect"
+                   noDataText="No customers found. Create your first customer."
+                   growing="true" growingThreshold="10">
+
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Customers ({= ${/customers} ? ${/customers}.length : 0})" />
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="Refresh" />
+                    </Toolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column width="8rem"><Text text="Customer ID" /></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Customer Name" /></Column>
+                    <Column minScreenWidth="Tablet" demandPopin="true"><Text text="Email" /></Column>
+                    <Column minScreenWidth="Desktop" demandPopin="true"><Text text="Phone" /></Column>
+                    <Column hAlign="End"><Text text="Credit Limit" /></Column>
+                    <Column hAlign="End"><Text text="Used Credit" /></Column>
+                    <Column hAlign="Center"><Text text="Status" /></Column>
+                    <Column hAlign="Center"><Text text="Actions" /></Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem type="Navigation" press=".onCustomerPress">
+                        <cells>
+                            <ObjectIdentifier title="{CustomerId}" />
+                            <ObjectIdentifier title="{CustomerName}" />
+                            <Link text="{Email}" href="mailto:{Email}" />
+                            <Text text="{Phone}" />
+                            <ObjectNumber number="{path:'CreditLimit', formatter:'.formatCurrency'}" state="None" />
+                            <ObjectNumber number="{path:'UsedCredit', formatter:'.formatCurrency'}"
+                                          state="{path:'UsedCredit', formatter:'.formatCreditState'}" />
+                            <ObjectStatus text="{Status}" state="{path:'Status', formatter:'.formatStatusState'}" />
+                            <HBox>
+                                <Button icon="sap-icon://edit" type="Transparent" press=".onEditCustomer" />
+                                <Button icon="sap-icon://delete" type="Transparent" press=".onDeleteCustomer" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

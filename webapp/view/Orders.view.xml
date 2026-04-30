@@ -1,0 +1,74 @@
+<mvc:View
+    controllerName="o2c.controller.Orders"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Sales Orders">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="Sales Orders" />
+                </contentLeft>
+                <contentRight>
+                    <SearchField placeholder="Search orders..." search=".onSearch"
+                                 liveChange=".onSearch" width="250px" />
+                    <Select id="statusFilter" change=".onStatusFilter">
+                        <core:Item key="All" text="All Status" />
+                        <core:Item key="Draft" text="Draft" />
+                        <core:Item key="Pending Approval" text="Pending Approval" />
+                        <core:Item key="Processing" text="Processing" />
+                        <core:Item key="Shipped" text="Shipped" />
+                        <core:Item key="Delivered" text="Delivered" />
+                        <core:Item key="Cancelled" text="Cancelled" />
+                    </Select>
+                    <Button text="New Order" icon="sap-icon://add-document"
+                            type="Emphasized" press=".onCreateOrder" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <Table id="ordersTable" items="{/orders}"
+                   noDataText="No orders found. Create your first order."
+                   growing="true" growingThreshold="10"
+                   mode="None">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Sales Orders ({= ${/orders} ? ${/orders}.length : 0})" />
+                        <ToolbarSpacer />
+                        <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="Refresh" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="10rem"><Text text="Order ID" /></Column>
+                    <Column><Text text="Customer" /></Column>
+                    <Column><Text text="Order Date" /></Column>
+                    <Column hAlign="End"><Text text="Total Amount" /></Column>
+                    <Column hAlign="Center"><Text text="Credit Status" /></Column>
+                    <Column hAlign="Center"><Text text="Order Status" /></Column>
+                    <Column hAlign="Center"><Text text="Actions" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Navigation" press=".onOrderPress">
+                        <cells>
+                            <ObjectIdentifier title="{OrderId}" />
+                            <ObjectIdentifier title="{CustomerName}" />
+                            <Text text="{OrderDate}" />
+                            <ObjectNumber number="{path:'TotalAmount', formatter:'.formatCurrency'}" state="None" />
+                            <ObjectStatus text="{CreditStatus}" state="{path:'CreditStatus', formatter:'.formatStatusState'}" />
+                            <ObjectStatus text="{OrderStatus}" state="{path:'OrderStatus', formatter:'.formatStatusState'}" />
+                            <HBox>
+                                <Button icon="sap-icon://detail-view" tooltip="View Details"
+                                        type="Transparent" press=".onViewDetail" />
+                                <Button icon="sap-icon://delete" tooltip="Cancel Order"
+                                        type="Transparent" press=".onCancelOrder" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+    </Page>
+</mvc:View>

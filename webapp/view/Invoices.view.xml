@@ -1,0 +1,132 @@
+<mvc:View
+    controllerName="o2c.controller.Invoices"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Invoices">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="Invoice Management" />
+                </contentLeft>
+                <contentRight>
+                    <Select id="invoiceFilter" change=".onFilterChange">
+                        <core:Item key="All" text="All Status" />
+                        <core:Item key="Pending" text="Pending" />
+                        <core:Item key="Paid" text="Paid" />
+                        <core:Item key="Overdue" text="Overdue" />
+                    </Select>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <!-- Summary Cards -->
+                <HBox class="sapUiSmallMarginBottom" wrap="Wrap">
+                    <GenericTile class="sapUiSmallMarginEnd" header="Total Invoiced" subheader="All invoices">
+                        <TileContent unit="INR">
+                            <NumericContent value="{= Math.round(${/invoices}.reduce(function(s,i){return s+i.Amount;},0)/100000)}"
+                                            scale="L" valueColor="Good" />
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile class="sapUiSmallMarginEnd" header="Overdue Invoices" subheader="Needs Attention">
+                        <TileContent>
+                            <NumericContent value="{= ${/invoices}.filter(function(i){return i.InvoiceStatus==='Overdue';}).length}"
+                                            valueColor="Critical" />
+                        </TileContent>
+                    </GenericTile>
+                    <GenericTile header="Pending Payment" subheader="Awaiting">
+                        <TileContent>
+                            <NumericContent value="{= ${/invoices}.filter(function(i){return i.InvoiceStatus==='Pending';}).length}"
+                                            valueColor="Neutral" />
+                        </TileContent>
+                    </GenericTile>
+                </HBox>
+
+                <Table id="invoicesTable" items="{/invoices}"
+                       noDataText="No invoices found."
+                       growing="true" growingThreshold="10">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="Invoices ({= ${/invoices} ? ${/invoices}.length : 0})" />
+                            <ToolbarSpacer />
+                            <Button icon="sap-icon://refresh" press=".onRefresh" />
+                        </Toolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column><Text text="Invoice ID" /></Column>
+                        <Column><Text text="Order ID" /></Column>
+                        <Column><Text text="Invoice Date" /></Column>
+                        <Column hAlign="End"><Text text="Amount (₹)" /></Column>
+                        <Column><Text text="Due Date" /></Column>
+                        <Column hAlign="Center"><Text text="Status" /></Column>
+                        <Column hAlign="Center"><Text text="Actions" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem type="Active">
+                            <cells>
+                                <ObjectIdentifier title="{InvoiceId}" />
+                                <Link text="{OrderId}" press=".onOrderLink" />
+                                <Text text="{InvoiceDate}" />
+                                <ObjectNumber number="{path:'Amount', formatter:'.formatCurrency'}"
+                                              state="None" emphasized="true" />
+                                <Text text="{DueDate}" />
+                                <ObjectStatus text="{InvoiceStatus}"
+                                              state="{path:'InvoiceStatus', formatter:'.formatStatusState'}" />
+                                <HBox>
+                                    <Button text="Record Payment" icon="sap-icon://payment-approval"
+                                            type="Transparent" press=".onRecordPayment"
+                                            visible="{= ${InvoiceStatus} !== 'Paid'}" />
+                                    <Button text="Mark Overdue" icon="sap-icon://alert"
+                                            type="Transparent" press=".onMarkOverdue"
+                                            visible="{= ${InvoiceStatus} === 'Pending'}" />
+                                </HBox>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+
+        <!-- Payment Dialog -->
+        <dependents>
+            <Dialog id="paymentDialog" title="Record Payment" contentWidth="420px">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <Label text="Invoice ID" />
+                        <Text id="payInvoiceId" text="" class="sapUiSmallMarginBottom" />
+                        <Label text="Invoice Amount" />
+                        <Text id="payInvoiceAmt" text="" class="sapUiSmallMarginBottom" />
+                        <Label text="Amount Paid (₹)" required="true" />
+                        <Input id="payAmount" type="Number" placeholder="Enter amount paid"
+                               class="sapUiSmallMarginBottom" />
+                        <Label text="Payment Mode" required="true" />
+                        <Select id="payMode" class="sapUiSmallMarginBottom">
+                            <core:Item key="NEFT" text="NEFT" />
+                            <core:Item key="RTGS" text="RTGS" />
+                            <core:Item key="Cheque" text="Cheque" />
+                            <core:Item key="UPI" text="UPI" />
+                            <core:Item key="Cash" text="Cash" />
+                        </Select>
+                        <Label text="Payment Date" required="true" />
+                        <DatePicker id="payDate" value=""
+                                    displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd"
+                                    class="sapUiSmallMarginBottom" />
+                        <Label text="Remarks" />
+                        <TextArea id="payRemarks" rows="2" placeholder="Optional remarks..." />
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Record Payment" type="Emphasized" press=".onConfirmPayment" />
+                </beginButton>
+                <endButton>
+                    <Button text="Cancel" press=".onCancelPayment" />
+                </endButton>
+            </Dialog>
+        </dependents>
+    </Page>
+</mvc:View>

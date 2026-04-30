@@ -1,0 +1,9 @@
+<mvc:View
+    controllerName="o2c.controller.App"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    displayBlock="true">
+
+    <App id="appNav" autoFocus="false" />
+
+</mvc:View>

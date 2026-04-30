@@ -1,0 +1,124 @@
+<mvc:View
+    controllerName="o2c.controller.CreditCheck"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Credit Check">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="Customer Credit Check" />
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <!-- Check Form -->
+                <Panel headerText="Run Credit Check" expandable="false" class="sapUiSmallMarginBottom">
+                    <f:SimpleForm editable="true" layout="ColumnLayout" columnsL="2" columnsM="1">
+                        <f:content>
+                            <Label text="Select Customer" required="true" />
+                            <Select id="ccCustomer" selectedKey="">
+                                <core:Item key="" text="-- Select Customer --" />
+                            </Select>
+
+                            <Label text="Order Amount (₹)" required="true" />
+                            <Input id="ccAmount" type="Number" placeholder="Enter order amount" />
+                        </f:content>
+                    </f:SimpleForm>
+                    <HBox class="sapUiSmallMargin">
+                        <Button text="Run Credit Check" icon="sap-icon://credit-card"
+                                type="Emphasized" press=".onRunCheck" />
+                        <Button text="Reset" icon="sap-icon://refresh"
+                                type="Default" press=".onReset" class="sapUiSmallMarginBegin" />
+                    </HBox>
+                </Panel>
+
+                <!-- Result Panel -->
+                <Panel id="resultPanel" headerText="Credit Check Result"
+                       expandable="false" visible="false">
+                    <VBox class="sapUiSmallMargin">
+
+                        <!-- Status Banner -->
+                        <MessageStrip id="creditResultStrip" text="" type="Success"
+                                      showIcon="true" class="sapUiSmallMarginBottom" />
+
+                        <!-- Details -->
+                        <f:SimpleForm editable="false" layout="ColumnLayout" columnsL="3" columnsM="2">
+                            <f:content>
+                                <Label text="Customer" />
+                                <Text id="resCustomerName" text="" />
+
+                                <Label text="Credit Limit" />
+                                <ObjectNumber id="resCreditLimit" number="" state="None" />
+
+                                <Label text="Used Credit" />
+                                <ObjectNumber id="resUsedCredit" number="" state="None" />
+
+                                <Label text="Available Credit" />
+                                <ObjectNumber id="resAvailCredit" number="" state="None" />
+
+                                <Label text="Order Amount" />
+                                <ObjectNumber id="resOrderAmount" number="" state="None" />
+
+                                <Label text="Credit Utilization" />
+                                <Text id="resCreditUtil" text="" />
+                            </f:content>
+                        </f:SimpleForm>
+
+                        <!-- Progress Bar -->
+                        <Label text="Credit Utilization After Order:" class="sapUiSmallMarginTop" />
+                        <ProgressIndicator id="creditProgress" percentValue="0"
+                                           displayValue="0%" showValue="true" state="Success"
+                                           class="sapUiSmallMarginBottom" />
+
+                        <!-- Recommendation -->
+                        <Panel headerText="Recommendation" class="sapUiSmallMarginTop">
+                            <Text id="resRecommendation" text="" class="sapUiSmallMargin"
+                                  wrapping="true" />
+                        </Panel>
+                    </VBox>
+                </Panel>
+
+                <!-- All Customers Credit Overview -->
+                <Panel headerText="Customer Credit Overview" expandable="true" expanded="true"
+                       class="sapUiSmallMarginTop">
+                    <Table items="{/customers}" noDataText="No customers">
+                        <columns>
+                            <Column><Text text="Customer" /></Column>
+                            <Column hAlign="End"><Text text="Credit Limit" /></Column>
+                            <Column hAlign="End"><Text text="Used Credit" /></Column>
+                            <Column hAlign="End"><Text text="Available" /></Column>
+                            <Column hAlign="Center"><Text text="Utilization" /></Column>
+                            <Column hAlign="Center"><Text text="Status" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier title="{CustomerName}" text="{CustomerId}" />
+                                    <ObjectNumber number="{path:'CreditLimit', formatter:'.formatCurrency'}" />
+                                    <ObjectNumber number="{path:'UsedCredit', formatter:'.formatCurrency'}"
+                                                  state="{path:'UsedCredit', formatter:'.formatUsedState'}" />
+                                    <ObjectNumber number="{path:'CreditLimit', formatter:'.formatAvail'}"
+                                                  state="Success" />
+                                    <ProgressIndicator
+                                        percentValue="{path: 'CreditLimit', formatter: '.fmtPct'}"
+                                        showValue="true" width="120px"
+                                        state="{path: 'CreditLimit', formatter: '.fmtPctState'}" />
+                                    <ObjectStatus text="{Status}"
+                                                  state="{path:'Status', formatter:'.formatStatusState'}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+                </Panel>
+
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

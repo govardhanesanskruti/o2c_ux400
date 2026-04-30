@@ -1,0 +1,122 @@
+<mvc:View
+    controllerName="o2c.controller.Dashboard"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+<App>
+    <Page title="O2C Dashboard" showNavButton="false" backgroundDesign="List">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Title text="⚡ Order-to-Cash Enterprise Suite" titleStyle="H4" />
+                </contentLeft>
+                <contentRight>
+                    <Avatar initials="{/currentUser/avatar}" displaySize="S" backgroundColor="Accent6" />
+                    <Text text="{/currentUser/name}" class="sapUiSmallMarginBegin" />
+                    <Button icon="sap-icon://log" tooltip="Logout" type="Transparent" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <HBox height="100%" renderType="Bare">
+                <VBox width="200px" class="sapUiSizeCompact" backgroundDesign="Transparent">
+                    <List showSeparators="None">
+                        <StandardListItem title="Dashboard" icon="sap-icon://home" type="Active" press="onNavDashboard" selected="true" />
+                        <StandardListItem title="Customers" icon="sap-icon://customer" type="Active" press="onNavCustomers" />
+                        <StandardListItem title="Products" icon="sap-icon://product" type="Active" press="onNavProducts" />
+                        <StandardListItem title="Orders" icon="sap-icon://sales-order" type="Active" press="onNavOrders" />
+                        <StandardListItem title="Credit Check" icon="sap-icon://credit-card" type="Active" press="onNavCreditCheck" />
+                        <StandardListItem title="Approvals" icon="sap-icon://approvals" type="Active" press="onNavApprovals" />
+                        <StandardListItem title="Invoices" icon="sap-icon://invoice" type="Active" press="onNavInvoices" />
+                        <StandardListItem title="Payments" icon="sap-icon://payment-approval" type="Active" press="onNavPayments" />
+                        <StandardListItem title="Reports" icon="sap-icon://bar-chart" type="Active" press="onNavReports" />
+                    </List>
+                </VBox>
+
+                <VBox class="sapUiMediumMargin" width="100%">
+                    
+                    <HBox wrap="Wrap" justifyContent="Start" class="sapUiSmallMarginBottom">
+                        <GenericTile header="Total Orders" subheader="All Time" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                            <tileContent>
+                                <TileContent unit="Orders">
+                                    <NumericContent value="{/dashboard/totalOrders}" valueColor="Good" />
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+
+                        <GenericTile header="Pending Approvals" subheader="Require Action" press=".onNavApprovals" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                            <tileContent>
+                                <TileContent unit="Orders">
+                                    <NumericContent value="{/dashboard/pendingApprovals}" valueColor="Critical" />
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+
+                        <GenericTile header="Total Revenue" subheader="This Year" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                            <tileContent>
+                                <TileContent unit="INR">
+                                    <NumericContent value="65.3" scale="L" valueColor="Good" />
+                                </TileContent>
+                            </tileContent>
+                        </GenericTile>
+                    </HBox>
+
+                    <Panel headerText="Quick Actions" class="sapUiSmallMarginBottom">
+                        <HBox wrap="Wrap">
+                            <Button text="New Order" icon="sap-icon://add-document" type="Emphasized" press=".onCreateOrder" class="sapUiSmallMarginEnd" />
+                            <Button text="New Customer" icon="sap-icon://add-contact" press=".onNavCustomers" class="sapUiSmallMarginEnd" />
+                            <Button text="Review Approvals" icon="sap-icon://approvals" type="Attention" press=".onNavApprovals" class="sapUiSmallMarginEnd" />
+                            <Button text="View Reports" icon="sap-icon://bar-chart" press=".onNavReports" />
+                        </HBox>
+                    </Panel>
+
+                    <HBox wrap="Wrap" width="100%">
+                        <Panel headerText="Recent Orders" width="65%" class="sapUiSmallMarginEnd">
+                            <Table items="{/orders}" noDataText="No orders found">
+                                <columns>
+                                    <Column><Text text="Order ID" /></Column>
+                                    <Column><Text text="Customer" /></Column>
+                                    <Column hAlign="End"><Text text="Amount" /></Column>
+                                    <Column><Text text="Status" /></Column>
+                                    <Column><Text text="Credit" /></Column>
+                                </columns>
+                                <items>
+                                    <ColumnListItem type="Navigation" press=".onOrderPress">
+                                        <cells>
+                                            <ObjectIdentifier title="{OrderId}" />
+                                            <Text text="{CustomerName}" />
+                                            <ObjectNumber number="{path:'TotalAmount', formatter:'.formatCurrency'}" />
+                                            <ObjectStatus text="{OrderStatus}" state="{path:'OrderStatus', formatter:'.formatStatusState'}" />
+                                            <ObjectStatus text="{CreditStatus}" state="{path:'CreditStatus', formatter:'.formatStatusState'}" />
+                                        </cells>
+                                    </ColumnListItem>
+                                </items>
+                            </Table>
+                        </Panel>
+
+                        <Panel headerText="Recent Activity" width="100%">
+                            <List items="{/dashboard/recentActivity}">
+                                <CustomListItem>
+                                    <HBox class="sapUiSmallMargin" alignItems="Center">
+                                        <core:Icon src="{icon}" 
+                                                   color="{= ${type} === 'Error' ? 'Negative' : (${type} === 'Success' ? 'Positive' : 'Neutral') }"
+                                                   size="1rem" class="sapUiSmallMarginEnd" />
+                                        <VBox>
+                                            <Text text="{text}" wrapping="true" />
+                                            <Label text="{time}" design="Standard" />
+                                        </VBox>
+                                    </HBox>
+                                </CustomListItem>
+                            </List>
+                        </Panel>
+                    </HBox>
+
+                </VBox>
+            </HBox>
+        </content>
+    </Page>
+</App>
+</mvc:View>

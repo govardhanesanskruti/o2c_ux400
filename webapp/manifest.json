@@ -1,0 +1,82 @@
+{
+  
+  "_version": "1.58.0",
+  "sap.app": {
+    "id": "o2c",
+    "type": "application",
+    "title": "Order to Cash Enterprise Suite",
+    "description": "O2C Prototype for SAP BTP",
+    "applicationVersion": { "version": "1.0.0" },
+    "i18n": "i18n/i18n.properties"
+  },
+  "sap.ui": {
+    "technology": "UI5",
+    "deviceTypes": { "desktop": true, "tablet": true, "phone": true }
+  },
+  "sap.ui5": {
+    "rootView": {
+      "viewName": "o2c.view.App",
+      "type": "XML",
+      "async": true,
+      "id": "app"
+    },
+    "dependencies": {
+      "minUI5Version": "1.108.0",
+      "libs": {
+        "sap.ui.core": {},
+        "sap.m": {},
+        "sap.f": {},
+        "sap.ui.layout": {},
+        "sap.ui.unified": {},
+        "sap.suite.ui.microchart": {}
+      }
+    },
+    "models": {
+      "i18n": {
+        "type": "sap.ui.model.resource.ResourceModel",
+        "settings": { "bundleName": "o2c.i18n.i18n" }
+      }
+    },
+    "routing": {
+      "config": {
+        "routerClass": "sap.m.routing.Router",
+        "viewType": "XML",
+        "viewPath": "o2c.view",
+        "controlId": "appNav",
+        "controlAggregation": "pages",
+        "bypassed": { "target": "dashboard" },
+        "async": true
+      },
+      "routes": [
+        { "pattern": "", "name": "dashboard", "target": "dashboard" },
+        { "pattern": "customers", "name": "customers", "target": "customers" },
+        { "pattern": "customers/create", "name": "customerCreate", "target": "customerCreate" },
+        { "pattern": "customers/edit/{customerId}", "name": "customerEdit", "target": "customerEdit" },
+        { "pattern": "products", "name": "products", "target": "products" },
+        { "pattern": "orders", "name": "orders", "target": "orders" },
+        { "pattern": "orders/create", "name": "orderCreate", "target": "orderCreate" },
+        { "pattern": "orders/detail/{orderId}", "name": "orderDetail", "target": "orderDetail" },
+        { "pattern": "creditcheck", "name": "creditcheck", "target": "creditcheck" },
+        { "pattern": "approvals", "name": "approvals", "target": "approvals" },
+        { "pattern": "invoices", "name": "invoices", "target": "invoices" },
+        { "pattern": "payments", "name": "payments", "target": "payments" }
+       
+      ],
+      "targets": {
+        "dashboard":     { "viewName": "Dashboard",     "viewLevel": 1 },
+        "customers":     { "viewName": "Customers",     "viewLevel": 2 },
+        "customerCreate":{ "viewName": "CustomerCreate","viewLevel": 3 },
+        "customerEdit":  { "viewName": "CustomerEdit",  "viewLevel": 3 },
+        "products":      { "viewName": "Products",      "viewLevel": 2 },
+        "orders":        { "viewName": "Orders",        "viewLevel": 2 },
+        "orderCreate":   { "viewName": "OrderCreate",   "viewLevel": 3 },
+        "orderDetail":   { "viewName": "OrderDetail",   "viewLevel": 3 },
+        "creditcheck":   { "viewName": "CreditCheck",   "viewLevel": 2 },
+        "approvals":     { "viewName": "Approvals",     "viewLevel": 2 },
+        "invoices":      { "viewName": "Invoices",      "viewLevel": 2 },
+        "payments":      { "viewName": "Payments",      "viewLevel": 2 }
+        
+      }
+    }
+  }
+}

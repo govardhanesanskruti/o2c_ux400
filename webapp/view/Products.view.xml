@@ -1,0 +1,95 @@
+<mvc:View
+    controllerName="o2c.controller.Products"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Product Master">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="Product Master Data" />
+                </contentLeft>
+                <contentRight>
+                    <SearchField placeholder="Search products..." search=".onSearch"
+                                 liveChange=".onSearch" width="250px" />
+                    <Select id="categoryFilter" change=".onCategoryFilter">
+                        <core:Item key="All" text="All Categories" />
+                        <core:Item key="Software" text="Software" />
+                        <core:Item key="Hardware" text="Hardware" />
+                        <core:Item key="Services" text="Services" />
+                    </Select>
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <Table id="productTable" items="{/products}"
+                   noDataText="No products found"
+                   growing="true" growingThreshold="10">
+                <headerToolbar>
+                    <Toolbar>
+                        <Title text="Products ({= ${/products} ? ${/products}.length : 0})" />
+                        <ToolbarSpacer />
+                        <Button text="Add Product" icon="sap-icon://add" type="Emphasized"
+                                press=".onAddProduct" />
+                    </Toolbar>
+                </headerToolbar>
+                <columns>
+                    <Column width="8rem"><Text text="Product ID" /></Column>
+                    <Column><Text text="Product Name" /></Column>
+                    <Column><Text text="Category" /></Column>
+                    <Column hAlign="End"><Text text="Unit Price (₹)" /></Column>
+                    <Column hAlign="Center"><Text text="Stock" /></Column>
+                    <Column hAlign="Center"><Text text="Status" /></Column>
+                    <Column hAlign="Center"><Text text="Actions" /></Column>
+                </columns>
+                <items>
+                    <ColumnListItem type="Active">
+                        <cells>
+                            <ObjectIdentifier title="{ProductId}" />
+                            <ObjectIdentifier title="{ProductName}" />
+                            <ObjectAttribute text="{Category}" />
+                            <ObjectNumber number="{path:'Price', formatter:'.formatCurrency'}" state="None" />
+                            <ObjectNumber number="{Stock}" unit="units"
+                                          state="{path:'Stock', formatter:'.formatStockState'}" />
+                            <ObjectStatus text="{Status}" state="{path:'Status', formatter:'.formatStatusState'}" />
+                            <HBox>
+                                <Button icon="sap-icon://edit" type="Transparent" press=".onEditProduct" />
+                            </HBox>
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </content>
+
+        <!-- Add Product Dialog -->
+        <dependents>
+            <Dialog id="addProductDialog" title="Add New Product" contentWidth="500px">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <Label text="Product Name" required="true" />
+                        <Input id="newProdName" placeholder="Product name" class="sapUiSmallMarginBottom" />
+                        <Label text="Category" required="true" />
+                        <Select id="newProdCategory" class="sapUiSmallMarginBottom">
+                            <core:Item key="Software" text="Software" />
+                            <core:Item key="Hardware" text="Hardware" />
+                            <core:Item key="Services" text="Services" />
+                        </Select>
+                        <Label text="Unit Price (₹)" required="true" />
+                        <Input id="newProdPrice" type="Number" placeholder="0" class="sapUiSmallMarginBottom" />
+                        <Label text="Stock Quantity" required="true" />
+                        <Input id="newProdStock" type="Number" placeholder="0" class="sapUiSmallMarginBottom" />
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Save" type="Emphasized" press=".onSaveProduct" />
+                </beginButton>
+                <endButton>
+                    <Button text="Cancel" press=".onCancelProduct" />
+                </endButton>
+            </Dialog>
+        </dependents>
+    </Page>
+</mvc:View>

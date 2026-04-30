@@ -1,0 +1,64 @@
+<mvc:View
+    controllerName="o2c.controller.CustomerCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Create Customer" showNavButton="true" navButtonPress=".navBack">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="New Customer" />
+                </contentLeft>
+                <contentRight>
+                    <Button text="Save" type="Emphasized" icon="sap-icon://save" press=".onSave" />
+                    <Button text="Cancel" type="Default" press=".navBack" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+                <f:SimpleForm id="customerForm" editable="true"
+                              layout="ColumnLayout" columnsL="2" columnsM="2"
+                              title="Customer Information">
+                    <f:content>
+                        <Label text="Customer ID" required="true" />
+                        <Input id="customerId" placeholder="Auto-generated" enabled="false"
+                               value="{/newCustomer/CustomerId}" />
+
+                        <Label text="Customer Name" required="true" />
+                        <Input id="customerName" placeholder="Enter customer name"
+                               value="{/newCustomer/CustomerName}"
+                               valueLiveUpdate="true" />
+
+                        <Label text="Email Address" required="true" />
+                        <Input id="customerEmail" placeholder="e.g. procurement@company.com"
+                               value="{/newCustomer/Email}" type="Email" />
+
+                        <Label text="Phone Number" required="true" />
+                        <Input id="customerPhone" placeholder="e.g. +91-22-12345678"
+                               value="{/newCustomer/Phone}" type="Tel" />
+
+                        <Label text="Address" required="true" />
+                        <TextArea id="customerAddress" placeholder="Full address"
+                                  value="{/newCustomer/Address}" rows="3" growing="true" />
+
+                        <Label text="Credit Limit (₹)" required="true" />
+                        <Input id="customerCreditLimit" placeholder="e.g. 1000000"
+                               value="{/newCustomer/CreditLimit}" type="Number" />
+
+                        <Label text="Status" />
+                        <Select id="customerStatus" selectedKey="{/newCustomer/Status}">
+                            <core:Item key="Active" text="Active" />
+                            <core:Item key="On Hold" text="On Hold" />
+                            <core:Item key="Inactive" text="Inactive" />
+                        </Select>
+                    </f:content>
+                </f:SimpleForm>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

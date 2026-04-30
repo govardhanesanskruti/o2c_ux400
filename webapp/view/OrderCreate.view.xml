@@ -1,0 +1,158 @@
+<mvc:View
+    controllerName="o2c.controller.OrderCreate"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.ui.layout.form"
+    xmlns:core="sap.ui.core">
+
+    <Page title="Create Sales Order">
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <Button icon="sap-icon://nav-back" press=".navBack" />
+                    <Title text="New Sales Order" />
+                </contentLeft>
+                <contentRight>
+                    <Button text="Save Order" type="Emphasized" icon="sap-icon://save" press=".onSaveOrder" />
+                    <Button text="Discard" type="Default" press=".navBack" />
+                </contentRight>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiMediumMargin">
+
+                <!-- Order Header -->
+                <Panel headerText="Order Header" expandable="false" class="sapUiSmallMarginBottom">
+                    <f:SimpleForm editable="true" layout="ColumnLayout" columnsL="2" columnsM="2">
+                        <f:content>
+                            <Label text="Order ID" />
+                            <Input value="{/newOrder/OrderId}" enabled="false" />
+
+                            <Label text="Customer" required="true" />
+                            <Select id="orderCustomer" change=".onCustomerChange"
+                                    selectedKey="{/newOrder/CustomerId}">
+                                <core:Item key="" text="-- Select Customer --" />
+                                <items>
+                                    <core:ListItem key="{CustomerId}" text="{CustomerName}"
+                                                   additionalText="{CustomerId}"
+                                                   xmlns:core="sap.ui.core" />
+                                </items>
+                            </Select>
+
+                            <Label text="Order Date" required="true" />
+                            <DatePicker id="orderDate" value="{/newOrder/OrderDate}"
+                                        displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd" />
+
+                            <Label text="Order Status" />
+                            <Input value="Draft" enabled="false" />
+
+                            <Label text="Credit Status" />
+                            <Input value="Pending" enabled="false" />
+                        </f:content>
+                    </f:SimpleForm>
+                </Panel>
+
+                <!-- Customer Credit Info -->
+                <Panel id="creditInfoPanel" headerText="Customer Credit Information"
+                       expandable="false" class="sapUiSmallMarginBottom" visible="false">
+                    <HBox class="sapUiSmallMargin" wrap="Wrap">
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Credit Limit" />
+                            <Text text="{/newOrder/_creditLimit}" class="sapUiSmallMarginTop" />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Used Credit" />
+                            <Text text="{/newOrder/_usedCredit}" class="sapUiSmallMarginTop" />
+                        </VBox>
+                        <VBox class="sapUiSmallMarginEnd">
+                            <Label text="Available Credit" />
+                            <Text text="{/newOrder/_availCredit}" class="sapUiSmallMarginTop" />
+                        </VBox>
+                    </HBox>
+                </Panel>
+
+                <!-- Order Items -->
+                <Panel headerText="Order Line Items" expandable="false" class="sapUiSmallMarginBottom">
+                    <headerToolbar>
+                        <Toolbar>
+                            <Title text="Line Items" />
+                            <ToolbarSpacer />
+                            <Button text="Add Item" icon="sap-icon://add" type="Default" press=".onAddItem" />
+                        </Toolbar>
+                    </headerToolbar>
+
+                    <Table id="itemsTable" items="{/newOrder/items}"
+                           noDataText="No items added. Click 'Add Item' to begin."
+                           mode="None">
+                        <columns>
+                            <Column><Text text="Product" /></Column>
+                            <Column hAlign="Center"><Text text="Quantity" /></Column>
+                            <Column hAlign="End"><Text text="Unit Price (₹)" /></Column>
+                            <Column hAlign="End"><Text text="Item Total (₹)" /></Column>
+                            <Column hAlign="Center"><Text text="Remove" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <ObjectIdentifier title="{ProductName}" text="{ProductId}" />
+                                    <Input type="Number" value="{Quantity}"
+                                           change=".onQtyChange" width="80px" />
+                                    <ObjectNumber number="{path:'UnitPrice', formatter:'.formatCurrency'}" />
+                                    <ObjectNumber number="{path:'ItemTotal', formatter:'.formatCurrency'}"
+                                                  state="Success" />
+                                    <Button icon="sap-icon://decline" type="Transparent"
+                                            press=".onRemoveItem" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
+
+                    <!-- Total Row -->
+                    <HBox justifyContent="End" class="sapUiSmallMargin">
+                        <VBox alignItems="End">
+                            <Label text="Order Total:" design="Bold" />
+                            <Title text="{path: '/newOrder/TotalAmount', formatter: '.formatCurrency'}"
+                                   titleStyle="H4" />
+                        </VBox>
+                    </HBox>
+                </Panel>
+
+            </VBox>
+        </content>
+
+        <!-- Add Item Dialog -->
+        <dependents>
+            <Dialog id="addItemDialog" title="Add Product to Order" contentWidth="500px">
+                <content>
+                    <VBox class="sapUiSmallMargin">
+                        <Label text="Select Product" required="true" />
+                        <Select id="itemProduct" class="sapUiSmallMarginBottom"
+                                change=".onProductSelect">
+                            <core:Item key="" text="-- Select Product --" />
+                        </Select>
+
+                        <Label text="Available Stock" />
+                        <Text id="itemStock" text="-" class="sapUiSmallMarginBottom" />
+
+                        <Label text="Unit Price (₹)" />
+                        <Input id="itemUnitPrice" enabled="false" class="sapUiSmallMarginBottom" />
+
+                        <Label text="Quantity" required="true" />
+                        <Input id="itemQty" type="Number" placeholder="Enter quantity"
+                               change=".onItemQtyChange" class="sapUiSmallMarginBottom" />
+
+                        <Label text="Item Total (₹)" />
+                        <Input id="itemTotal" enabled="false" />
+                    </VBox>
+                </content>
+                <beginButton>
+                    <Button text="Add to Order" type="Emphasized" press=".onConfirmAddItem" />
+                </beginButton>
+                <endButton>
+                    <Button text="Cancel" press=".onCancelAddItem" />
+                </endButton>
+            </Dialog>
+        </dependents>
+    </Page>
+</mvc:View>
