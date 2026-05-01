@@ -5,118 +5,298 @@
     xmlns:l="sap.ui.layout"
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
-<App>
-    <Page title="O2C Dashboard" showNavButton="false" backgroundDesign="List">
+
+    <Page showNavButton="false" backgroundDesign="Solid">
+
+        <!-- ═══════════════════════════════════════════
+             HEADER
+        ═══════════════════════════════════════════ -->
         <customHeader>
-            <Bar>
+            <Bar design="Header">
                 <contentLeft>
-                    <Title text="⚡ Order-to-Cash Enterprise Suite" titleStyle="H4" />
+                    <core:Icon src="sap-icon://flash" color="#0070F3" size="1.4rem" class="sapUiTinyMarginEnd" />
+                    <Title text="Order-to-Cash Enterprise Suite" titleStyle="H5" />
                 </contentLeft>
                 <contentRight>
-                    <Avatar initials="{/currentUser/avatar}" displaySize="S" backgroundColor="Accent6" />
-                    <Text text="{/currentUser/name}" class="sapUiSmallMarginBegin" />
-                    <Button icon="sap-icon://log" tooltip="Logout" type="Transparent" />
+                    <Avatar
+                        initials="{/currentUser/avatar}"
+                        backgroundColor="Accent6"
+                        size="S"
+                        tooltip="{/currentUser/name}" />
+                    <Button
+                        icon="sap-icon://log"
+                        tooltip="Logout"
+                        type="Transparent"
+                        class="sapUiTinyMarginBegin" />
                 </contentRight>
             </Bar>
         </customHeader>
 
         <content>
             <HBox height="100%" renderType="Bare">
-                <VBox width="200px" class="sapUiSizeCompact" backgroundDesign="Transparent">
-                    <List showSeparators="None">
-                        <StandardListItem title="Dashboard" icon="sap-icon://home" type="Active" press="onNavDashboard" selected="true" />
-                        <StandardListItem title="Customers" icon="sap-icon://customer" type="Active" press="onNavCustomers" />
-                        <StandardListItem title="Products" icon="sap-icon://product" type="Active" press="onNavProducts" />
-                        <StandardListItem title="Orders" icon="sap-icon://sales-order" type="Active" press="onNavOrders" />
-                        <StandardListItem title="Credit Check" icon="sap-icon://credit-card" type="Active" press="onNavCreditCheck" />
-                        <StandardListItem title="Approvals" icon="sap-icon://approvals" type="Active" press="onNavApprovals" />
-                        <StandardListItem title="Invoices" icon="sap-icon://invoice" type="Active" press="onNavInvoices" />
-                        <StandardListItem title="Payments" icon="sap-icon://payment-approval" type="Active" press="onNavPayments" />
-                        <StandardListItem title="Reports" icon="sap-icon://bar-chart" type="Active" press="onNavReports" />
+
+                <!-- ═══════════════════════════════════════════
+                     SIDEBAR — dark navy gradient
+                ═══════════════════════════════════════════ -->
+                <VBox width="30px" class="sapUiSizeCompact" backgroundDesign="Solid">
+                    <core:HTML content="
+                        &lt;div style='
+                            background: linear-gradient(180deg, #0a2342 0%, #0d2d54 100%);
+                            min-height: 100vh;
+                            padding-top: 12px;
+                        '&gt;&lt;/div&gt;
+                    " />
+                </VBox>
+                <VBox width="220px" style="margin-left:-220px; position:relative; z-index:1;" class="sapUiSizeCompact">
+                    <List separators="None" mode="SingleSelectMaster" backgroundDesign="Transparent">
+                        <StandardListItem title="Dashboard"    icon="sap-icon://home"             press=".onNavDashboard"   selected="true" />
+                        <StandardListItem title="Customers"    icon="sap-icon://customer"         press=".onNavCustomers" />
+                        <StandardListItem title="Products"     icon="sap-icon://product"          press=".onNavProducts" />
+                        <StandardListItem title="Orders"       icon="sap-icon://sales-order"      press=".onNavOrders" />
+                        <StandardListItem title="Credit Check" icon="sap-icon://credit-card"      press=".onNavCreditCheck" />
+                        <StandardListItem title="Approvals"    icon="sap-icon://approvals"        press=".onNavApprovals" />
+                        <StandardListItem title="Invoices"     icon="sap-icon://invoice"          press=".onNavInvoices" />
+                        <StandardListItem title="Payments"     icon="sap-icon://payment-approval" press=".onNavPayments" />
+                        
                     </List>
                 </VBox>
 
-                <VBox class="sapUiMediumMargin" width="100%">
-                    
-                    <HBox wrap="Wrap" justifyContent="Start" class="sapUiSmallMarginBottom">
-                        <GenericTile header="Total Orders" subheader="All Time" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
-                            <tileContent>
-                                <TileContent unit="Orders">
-                                    <NumericContent value="{/dashboard/totalOrders}" valueColor="Good" />
-                                </TileContent>
-                            </tileContent>
-                        </GenericTile>
+                <!-- ═══════════════════════════════════════════
+                     MAIN CONTENT
+                ═══════════════════════════════════════════ -->
+                <ScrollContainer height="100%" vertical="true" width="100%">
+                    <VBox class="sapUiMediumMargin">
 
-                        <GenericTile header="Pending Approvals" subheader="Require Action" press=".onNavApprovals" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
-                            <tileContent>
-                                <TileContent unit="Orders">
-                                    <NumericContent value="{/dashboard/pendingApprovals}" valueColor="Critical" />
-                                </TileContent>
-                            </tileContent>
-                        </GenericTile>
+                        <!-- ① HERO WELCOME BANNER -->
+                        <core:HTML class="sapUiSmallMarginBottom" content="
+                            &lt;div style='
+                                background: linear-gradient(135deg, #0a2342 0%, #0057a8 55%, #0070f3 100%);
+                                padding: 22px 28px;
+                                border-radius: 12px;
+                                color: white;
+                                display: flex;
+                                justify-content: space-between;
+                                align-items: center;
+                                box-shadow: 0 4px 20px rgba(0,112,243,0.25);
+                            '&gt;
+                                &lt;div&gt;
+                                    &lt;div style='font-size:1.35rem;font-weight:700;margin-bottom:6px;font-family:sans-serif'&gt;Good Day, Sana 👋&lt;/div&gt;
+                                    &lt;div style='font-size:0.875rem;opacity:0.78;font-family:sans-serif'&gt;Here is your business snapshot for today&lt;/div&gt;
+                                &lt;/div&gt;
+                                &lt;div style='text-align:right;opacity:0.65;font-family:sans-serif'&gt;
+                                    &lt;div style='font-size:2rem'&gt;⚡&lt;/div&gt;
+                                    &lt;div style='font-size:0.75rem;letter-spacing:1px;text-transform:uppercase'&gt;O2C Suite&lt;/div&gt;
+                                &lt;/div&gt;
+                            &lt;/div&gt;
+                        " />
 
-                        <GenericTile header="Total Revenue" subheader="This Year" class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
-                            <tileContent>
-                                <TileContent unit="INR">
-                                    <NumericContent value="65.3" scale="L" valueColor="Good" />
-                                </TileContent>
-                            </tileContent>
-                        </GenericTile>
-                    </HBox>
+                        <!-- ② STATUS STRIP -->
+                        <MessageStrip
+                            text="✅  All systems operational · OData services healthy · Last synced 2 min ago"
+                            type="Success"
+                            showIcon="false"
+                            showCloseButton="false"
+                            class="sapUiSmallMarginBottom" />
 
-                    <Panel headerText="Quick Actions" class="sapUiSmallMarginBottom">
-                        <HBox wrap="Wrap">
-                            <Button text="New Order" icon="sap-icon://add-document" type="Emphasized" press=".onCreateOrder" class="sapUiSmallMarginEnd" />
-                            <Button text="New Customer" icon="sap-icon://add-contact" press=".onNavCustomers" class="sapUiSmallMarginEnd" />
-                            <Button text="Review Approvals" icon="sap-icon://approvals" type="Attention" press=".onNavApprovals" class="sapUiSmallMarginEnd" />
-                            <Button text="View Reports" icon="sap-icon://bar-chart" press=".onNavReports" />
+                        <!-- ③ KPI TILES — each with a distinct color identity -->
+                        <HBox wrap="Wrap" justifyContent="Start" class="sapUiSmallMarginBottom">
+
+                            <!-- Blue — Total Orders -->
+                            <GenericTile
+                                header="Total Orders"
+                                subheader="All Time"
+                                frameType="OneByOne"
+                                backgroundColor="#0057A8"
+                                press=".onNavOrders"
+                                class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                                <tileContent>
+                                    <TileContent unit="Orders">
+                                        <NumericContent
+                                            value="{/dashboard/totalOrders}"
+                                            valueColor="Good"
+                                            icon="sap-icon://sales-order"
+                                            withMargin="false" />
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+
+                            <!-- Amber — Pending Approvals -->
+                            <GenericTile
+                                header="Pending Approvals"
+                                subheader="Require Action"
+                                frameType="OneByOne"
+                                backgroundColor="#E76500"
+                                press=".onNavApprovals"
+                                class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                                <tileContent>
+                                    <TileContent unit="Pending">
+                                        <NumericContent
+                                            value="{/dashboard/pendingApprovals}"
+                                            valueColor="Critical"
+                                            icon="sap-icon://approvals"
+                                            withMargin="false" />
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+
+                            <!-- Green — Total Revenue (TwoByOne = wider tile) -->
+                            <GenericTile
+                                header="Total Revenue"
+                                subheader="This Financial Year"
+                                frameType="OneByOne"
+                                backgroundColor="#107E3E"
+                                class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                                <tileContent>
+                                    <TileContent unit="INR">
+                                        <NumericContent
+                                            value="65"
+                                
+                                            valueColor="Good"
+                                            icon="sap-icon://money-bills"
+                                            withMargin="false" />
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+
+                            <!-- Purple — Active Customers -->
+                            <GenericTile
+                                header="Active Customers"
+                                subheader="Total Registered"
+                                frameType="OneByOne"
+                                backgroundColor="#6A1B9A"
+                                press=".onNavCustomers"
+                                class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                                <tileContent>
+                                    <TileContent unit="Customers">
+                                        <NumericContent
+                                            value="{= ${/customers} ? ${/customers}.length : 0}"
+                                            valueColor="Good"
+                                            icon="sap-icon://group"
+                                            withMargin="false" />
+                                    </TileContent>
+                                </tileContent>
+                            </GenericTile>
+
                         </HBox>
-                    </Panel>
 
-                    <HBox wrap="Wrap" width="100%">
-                        <Panel headerText="Recent Orders" width="65%" class="sapUiSmallMarginEnd">
-                            <Table items="{/orders}" noDataText="No orders found">
-                                <columns>
-                                    <Column><Text text="Order ID" /></Column>
-                                    <Column><Text text="Customer" /></Column>
-                                    <Column hAlign="End"><Text text="Amount" /></Column>
-                                    <Column><Text text="Status" /></Column>
-                                    <Column><Text text="Credit" /></Column>
-                                </columns>
-                                <items>
-                                    <ColumnListItem type="Navigation" press=".onOrderPress">
-                                        <cells>
-                                            <ObjectIdentifier title="{OrderId}" />
-                                            <Text text="{CustomerName}" />
-                                            <ObjectNumber number="{path:'TotalAmount', formatter:'.formatCurrency'}" />
-                                            <ObjectStatus text="{OrderStatus}" state="{path:'OrderStatus', formatter:'.formatStatusState'}" />
-                                            <ObjectStatus text="{CreditStatus}" state="{path:'CreditStatus', formatter:'.formatStatusState'}" />
-                                        </cells>
-                                    </ColumnListItem>
-                                </items>
-                            </Table>
+                        <!-- ④ QUICK ACTIONS -->
+                        <Panel class="sapUiSmallMarginBottom" expandable="false">
+                            <headerToolbar>
+                                <Toolbar>
+                                    <core:Icon src="sap-icon://action" color="#0070F3" class="sapUiTinyMarginEnd" />
+                                    <Title text="Quick Actions" titleStyle="H5" />
+                                </Toolbar>
+                            </headerToolbar>
+                            <HBox wrap="Wrap" class="sapUiSmallMargin">
+                                <Button
+                                    text="New Order"
+                                    icon="sap-icon://add-document"
+                                    type="Emphasized"
+                                    press=".onCreateOrder"
+                                    class="sapUiSmallMarginEnd sapUiTinyMarginBottom" />
+                                <Button
+                                    text="New Customer"
+                                    icon="sap-icon://add-contact"
+                                    type="Default"
+                                    press=".onNavCustomers"
+                                    class="sapUiSmallMarginEnd sapUiTinyMarginBottom" />
+                                <Button
+                                    text="Review Approvals"
+                                    icon="sap-icon://approvals"
+                                    type="Attention"
+                                    press=".onNavApprovals"
+                                    class="sapUiSmallMarginEnd sapUiTinyMarginBottom" />
+                            </HBox>
                         </Panel>
 
-                        <Panel headerText="Recent Activity" width="100%">
-                            <List items="{/dashboard/recentActivity}">
-                                <CustomListItem>
-                                    <HBox class="sapUiSmallMargin" alignItems="Center">
-                                        <core:Icon src="{icon}" 
-                                                   color="{= ${type} === 'Error' ? 'Negative' : (${type} === 'Success' ? 'Positive' : 'Neutral') }"
-                                                   size="1rem" class="sapUiSmallMarginEnd" />
-                                        <VBox>
-                                            <Text text="{text}" wrapping="true" />
-                                            <Label text="{time}" design="Standard" />
-                                        </VBox>
-                                    </HBox>
-                                </CustomListItem>
-                            </List>
-                        </Panel>
-                    </HBox>
+                        <!-- ⑤ BOTTOM ROW -->
+                        <HBox wrap="Wrap" width="100%" alignItems="Start">
 
-                </VBox>
+                            <!-- Recent Orders with ⑥ row highlight -->
+                            <Panel class="sapUiSmallMarginEnd sapUiSmallMarginBottom" width="65%">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <core:Icon src="sap-icon://sales-order" color="#0070F3" class="sapUiTinyMarginEnd" />
+                                        <Title text="Recent Orders" titleStyle="H5" />
+                                        <ToolbarSpacer />
+                                        <Button
+                                            text="View All"
+                                            type="Transparent"
+                                            icon="sap-icon://arrow-right"
+                                            iconFirst="false"
+                                            press=".onNavOrders" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <Table
+                                    items="{/orders}"
+                                    noDataText="No recent orders found."
+                                    alternateRowColors="true"
+                                    showSeparators="Inner">
+                                    <columns>
+                                        <Column width="10rem"><Text text="Order ID" /></Column>
+                                        <Column><Text text="Customer" /></Column>
+                                        <Column hAlign="End"><Text text="Amount" /></Column>
+                                        <Column hAlign="Center"><Text text="Status" /></Column>
+                                        <Column hAlign="Center"><Text text="Credit" /></Column>
+                                    </columns>
+                                    <items>
+                                        <ColumnListItem
+                                            type="Navigation"
+                                            press=".onOrderPress"
+                                            highlight="{path:'OrderStatus', formatter:'.formatStatusState'}">
+                                            <cells>
+                                                <ObjectIdentifier title="{OrderId}" />
+                                                <Text text="{CustomerName}" />
+                                                <ObjectNumber
+                                                    number="{path:'TotalAmount', formatter:'.formatCurrency'}"
+                                                    state="None" />
+                                                <ObjectStatus
+                                                    text="{OrderStatus}"
+                                                    state="{path:'OrderStatus', formatter:'.formatStatusState'}"
+                                                    inverted="true" />
+                                                <ObjectStatus
+                                                    text="{CreditStatus}"
+                                                    state="{path:'CreditStatus', formatter:'.formatStatusState'}"
+                                                    inverted="true" />
+                                            </cells>
+                                        </ColumnListItem>
+                                    </items>
+                                </Table>
+                            </Panel>
+
+                            <!-- Recent Activity Feed -->
+                            <Panel width="100%" class="sapUiSmallMarginBottom">
+                                <headerToolbar>
+                                    <Toolbar>
+                                        <core:Icon src="sap-icon://activity-items" color="#0070F3" class="sapUiTinyMarginEnd" />
+                                        <Title text="Recent Activity" titleStyle="H5" />
+                                    </Toolbar>
+                                </headerToolbar>
+                                <List
+                                    items="{/dashboard/recentActivity}"
+                                    showSeparators="Inner"
+                                    noDataText="No recent activity.">
+                                    <CustomListItem>
+                                        <HBox class="sapUiSmallMargin" alignItems="Start">
+                                            <core:Icon
+                                                src="{icon}"
+                                                color="{= ${type} === 'Error' ? '#BB0000' : (${type} === 'Success' ? '#107E3E' : '#0070F3') }"
+                                                size="1.1rem"
+                                                class="sapUiSmallMarginEnd sapUiTinyMarginTop" />
+                                            <VBox>
+                                                <Text text="{text}" wrapping="true" />
+                                                <Label text="{time}" />
+                                            </VBox>
+                                        </HBox>
+                                    </CustomListItem>
+                                </List>
+                            </Panel>
+
+                        </HBox>
+                    </VBox>
+                </ScrollContainer>
+
             </HBox>
         </content>
     </Page>
-</App>
 </mvc:View>

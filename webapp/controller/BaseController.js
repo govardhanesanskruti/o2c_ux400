@@ -93,7 +93,7 @@ sap.ui.define([
         onNavCreditCheck: function () { this.navTo("creditcheck"); },
         onNavApprovals: function () { this.navTo("approvals"); },
         onNavInvoices: function () { this.navTo("invoices"); },
-        onNavPayments: function () { this.navTo("payments"); },
-        onNavReports: function () { this.navTo("reports"); }
+        onNavPayments: function () { this.navTo("payments"); }
+        
     });
 });

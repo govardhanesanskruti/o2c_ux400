@@ -5,8 +5,23 @@ sap.ui.define([
 
     return BaseController.extend("o2c.controller.Dashboard", {
 
+        // ─── Lifecycle ────────────────────────────────────────────────────────────
+
         onInit: function () {},
-        
+
+        // ─── Order Actions ────────────────────────────────────────────────────────
+
+        onCreateOrder: function () {
+            this.navTo("orderCreate");
+        },
+
+        onOrderPress: function (oEvent) {
+            var oItem = oEvent.getSource().getBindingContext().getObject();
+            this.navTo("orderDetail", { orderId: encodeURIComponent(oItem.OrderId) });
+        },
+
+        // ─── Navigation ───────────────────────────────────────────────────────────
+
         onNavDashboard: function () {
             this.navTo("dashboard");
         },
@@ -40,28 +55,16 @@ sap.ui.define([
         },
 
         onNavReports: function () {
-            this.navTo("reports");
+            // Route does not exist yet — safe no-op
+            sap.m.MessageToast.show("Reports module coming soon.");
         },
 
-        onCreateOrder: function () {
-            this.navTo("orderCreate");
-        },
-
-        onOrderPress: function (oEvent) {
-            var oContext = oEvent.getSource().getBindingContext();
-            if (!oContext) {
-                return;
-            }
-
-            var oItem = oContext.getObject();
-            this.navTo("orderDetail", {
-                orderId: encodeURIComponent(oItem.OrderId || oItem.orderId)
-            });
-        },
+        // ─── Formatters ───────────────────────────────────────────────────────────
 
         formatCurrency: function (val) {
             return this.getOwnerComponent().getModel() &&
-                BaseController.prototype.formatCurrency.call(this, val);
+                   BaseController.prototype.formatCurrency.call(this, val);
         }
+
     });
 });

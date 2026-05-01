@@ -1,0 +1,113 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="customerEditDialog"
+        title="Edit Customer — {/editCustomer/CustomerId}"
+        contentWidth="640px"
+        draggable="true"
+        resizable="true"
+        state="None">
+
+        <content>
+            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+
+                <f:SimpleForm
+                    editable="true"
+                    layout="ColumnLayout"
+                    columnsL="2"
+                    columnsM="2"
+                    columnsXL="2"
+                    labelSpanL="12"
+                    labelSpanM="12">
+                    <f:content>
+
+                        <Label text="Customer ID" />
+                        <Input value="{/editCustomer/CustomerId}" enabled="false" />
+
+                        <Label text="Customer Name" required="true" />
+                        <Input
+                            id="editName"
+                            value="{/editCustomer/CustomerName}"
+                            placeholder="Enter customer name" />
+
+                        <Label text="Email Address" required="true" />
+                        <Input
+                            id="editEmail"
+                            value="{/editCustomer/Email}"
+                            type="Email"
+                            placeholder="Enter email address" />
+
+                        <Label text="Phone Number" required="true" />
+                        <Input
+                            id="editPhone"
+                            value="{/editCustomer/Phone}"
+                            type="Tel"
+                            placeholder="Enter phone number" />
+
+                        <Label text="Address" />
+                        <TextArea
+                            id="editAddress"
+                            value="{/editCustomer/Address}"
+                            rows="3"
+                            placeholder="Enter address" />
+
+                        <Label text="Credit Limit (₹)" />
+                        <Input
+                            id="editCreditLimit"
+                            value="{/editCustomer/CreditLimit}"
+                            type="Number"
+                            placeholder="Enter credit limit" />
+
+                        <Label text="Used Credit (₹)" />
+                        <Input value="{/editCustomer/UsedCredit}" enabled="false" />
+
+                        <Label text="Status" />
+                        <Select selectedKey="{/editCustomer/Status}">
+                            <core:Item key="Active" text="Active" />
+                            <core:Item key="On Hold" text="On Hold" />
+                            <core:Item key="Inactive" text="Inactive" />
+                        </Select>
+
+                    </f:content>
+                </f:SimpleForm>
+
+                <!-- Credit Utilization Panel -->
+                <Panel headerText="Credit Utilization" class="sapUiSmallMarginTop">
+                    <HBox class="sapUiSmallMargin" alignItems="Center">
+                        <VBox width="100%">
+                            <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                <Label text="Used: ₹{/editCustomer/UsedCredit}" />
+                                <Label text="Limit: ₹{/editCustomer/CreditLimit}" />
+                            </HBox>
+                            <ProgressIndicator
+                                percentValue="{path: '/editCustomer', formatter: '.calcCreditPercent'}"
+                                displayValue="{path: '/editCustomer', formatter: '.calcCreditPercentText'}"
+                                state="{path: '/editCustomer', formatter: '.calcCreditState'}"
+                                showValue="true" />
+                        </VBox>
+                    </HBox>
+                </Panel>
+
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="Save Changes"
+                type="Emphasized"
+                icon="sap-icon://save"
+                press=".onSaveEdit" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="Cancel"
+                type="Default"
+                press=".onCancelEdit" />
+        </endButton>
+
+    </Dialog>
+
+</core:FragmentDefinition>
