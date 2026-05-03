@@ -48,15 +48,15 @@
                     " />
                 </VBox>
                 <VBox width="220px" style="margin-left:-220px; position:relative; z-index:1;" class="sapUiSizeCompact">
-                    <List separators="None" mode="SingleSelectMaster" backgroundDesign="Transparent">
-                        <StandardListItem title="Dashboard"    icon="sap-icon://home"             press=".onNavDashboard"   selected="true" />
-                        <StandardListItem title="Customers"    icon="sap-icon://customer"         press=".onNavCustomers" />
-                        <StandardListItem title="Products"     icon="sap-icon://product"          press=".onNavProducts" />
-                        <StandardListItem title="Orders"       icon="sap-icon://sales-order"      press=".onNavOrders" />
-                        <StandardListItem title="Credit Check" icon="sap-icon://credit-card"      press=".onNavCreditCheck" />
-                        <StandardListItem title="Approvals"    icon="sap-icon://approvals"        press=".onNavApprovals" />
-                        <StandardListItem title="Invoices"     icon="sap-icon://invoice"          press=".onNavInvoices" />
-                        <StandardListItem title="Payments"     icon="sap-icon://payment-approval" press=".onNavPayments" />
+                    <List showSeparators="None" backgroundDesign="Transparent">
+                        <StandardListItem title="Dashboard" icon="sap-icon://home" type="Active" press="onNavDashboard" selected="true" />
+                        <StandardListItem title="Customers" icon="sap-icon://customer" type="Active" press="onNavCustomers" />
+                        <StandardListItem title="Products" icon="sap-icon://product" type="Active" press="onNavProducts" />
+                        <StandardListItem title="Orders" icon="sap-icon://sales-order" type="Active" press="onNavOrders" />
+                        <StandardListItem title="Credit Check" icon="sap-icon://credit-card" type="Active" press="onNavCreditCheck" />
+                        <StandardListItem title="Approvals" icon="sap-icon://approvals" type="Active" press="onNavApprovals" />
+                        <StandardListItem title="Invoices" icon="sap-icon://invoice" type="Active" press="onNavInvoices" />
+                        <StandardListItem title="Payments" icon="sap-icon://payment-approval" type="Active" press="onNavPayments" />
                         
                     </List>
                 </VBox>

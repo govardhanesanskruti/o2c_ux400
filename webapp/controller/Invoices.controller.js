@@ -11,8 +11,10 @@ sap.ui.define([
 
         _selectedInvoice: null,
 
+        // ─── Filter ───────────────────────────────────────────────────────────────
+
         onFilterChange: function () {
-            var sKey = this.byId("invoiceFilter").getSelectedKey();
+            var sKey     = this.byId("invoiceFilter").getSelectedKey();
             var oBinding = this.byId("invoicesTable").getBinding("items");
             if (sKey === "All") {
                 oBinding.filter([]);
@@ -20,6 +22,8 @@ sap.ui.define([
                 oBinding.filter(new Filter("InvoiceStatus", FilterOperator.EQ, sKey));
             }
         },
+
+        // ─── Record Payment ───────────────────────────────────────────────────────
 
         onRecordPayment: function (oEvent) {
             var oInvoice = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
@@ -37,34 +41,29 @@ sap.ui.define([
             var sMode = this.byId("payMode").getSelectedKey();
             var sDate = this.byId("payDate").getValue();
 
-            if (nPaid <= 0) {
-                MessageBox.error("Please enter a valid amount.");
-                return;
-            }
-            if (!sDate) {
-                MessageBox.error("Please select payment date.");
-                return;
-            }
+            if (nPaid <= 0) { MessageBox.error("Please enter a valid amount."); return; }
+            if (!sDate)     { MessageBox.error("Please select payment date.");   return; }
 
             var oModel = this.getModel();
-            var oInv = this._selectedInvoice;
-            var bFull = nPaid >= oInv.Amount;
+            var oInv   = this._selectedInvoice;
+            var bFull  = nPaid >= oInv.Amount;
 
-            // Add payment record
             var aPayments = oModel.getProperty("/payments") || [];
             var max = 0;
-            aPayments.forEach(function (p) { var n = parseInt(p.PaymentId.replace(/\D/g, ""), 10); if (n > max) max = n; });
+            aPayments.forEach(function (p) {
+                var n = parseInt(p.PaymentId.replace(/\D/g, ""), 10);
+                if (n > max) max = n;
+            });
             aPayments.push({
-                PaymentId: "PAY-" + String(max + 1).padStart(3, "0"),
-                InvoiceId: oInv.InvoiceId,
-                AmountPaid: nPaid,
-                PaymentDate: sDate,
-                PaymentMode: sMode,
+                PaymentId:     "PAY-" + String(max + 1).padStart(3, "0"),
+                InvoiceId:     oInv.InvoiceId,
+                AmountPaid:    nPaid,
+                PaymentDate:   sDate,
+                PaymentMode:   sMode,
                 PaymentStatus: bFull ? "Completed" : "Partial"
             });
             oModel.setProperty("/payments", aPayments);
 
-            // Update invoice status
             var aInvoices = oModel.getProperty("/invoices");
             var idx = aInvoices.findIndex(function (i) { return i.InvoiceId === oInv.InvoiceId; });
             if (idx >= 0) {
@@ -72,7 +71,6 @@ sap.ui.define([
                 oModel.setProperty("/invoices", aInvoices.slice());
             }
 
-            // Update overdue count in dashboard
             var nOverdue = aInvoices.filter(function (i) { return i.InvoiceStatus === "Overdue"; }).length;
             oModel.setProperty("/dashboard/overdueInvoices", nOverdue);
 
@@ -84,11 +82,13 @@ sap.ui.define([
             this.byId("paymentDialog").close();
         },
 
+        // ─── Mark Overdue ─────────────────────────────────────────────────────────
+
         onMarkOverdue: function (oEvent) {
-            var oInvoice = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
-            var oModel = this.getModel();
+            var oInvoice  = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
+            var oModel    = this.getModel();
             var aInvoices = oModel.getProperty("/invoices");
-            var idx = aInvoices.findIndex(function (i) { return i.InvoiceId === oInvoice.InvoiceId; });
+            var idx       = aInvoices.findIndex(function (i) { return i.InvoiceId === oInvoice.InvoiceId; });
             if (idx >= 0) {
                 aInvoices[idx].InvoiceStatus = "Overdue";
                 oModel.setProperty("/invoices", aInvoices.slice());
@@ -98,12 +98,20 @@ sap.ui.define([
             }
         },
 
+        // ─── Links ────────────────────────────────────────────────────────────────
+
         onOrderLink: function (oEvent) {
-            var sOrderId = oEvent.getSource().getText();
-            this.navTo("orderDetail", { orderId: encodeURIComponent(sOrderId) });
+            // orderDetail route removed — navigate to orders list instead
+            this.navTo("orders");
         },
 
-        onRefresh: function () { MessageToast.show("Invoices refreshed"); },
+        onRefresh: function () {
+            this.byId("invoicesTable").getBinding("items").filter([]);
+            this.byId("invoiceFilter").setSelectedKey("All");
+            MessageToast.show("Invoices refreshed.");
+        },
+
+        // ─── Formatters ───────────────────────────────────────────────────────────
 
         formatCurrency: function (val) {
             if (!val && val !== 0) return "₹0";
@@ -112,6 +120,37 @@ sap.ui.define([
 
         formatStatusState: function (s) {
             return BaseController.prototype.formatStatusState.call(this, s);
+        },
+
+        // ── Tile formatters — replace the broken .reduce()/.filter() expressions ──
+
+        /**
+         * Total invoiced in Lakhs for scale="L" NumericContent.
+         * Replaces: {= Math.round(${/invoices}.reduce(...)/ 100000)}
+         */
+        calcTotalInvoiced: function (aInvoices) {
+            if (!aInvoices || !aInvoices.length) return 0;
+            var total = aInvoices.reduce(function (s, i) { return s + (i.Amount || 0); }, 0);
+            return Math.round(total / 100000);
+        },
+
+        /**
+         * Count of Overdue invoices.
+         * Replaces: {= ${/invoices}.filter(function(i){return i.InvoiceStatus==='Overdue';}).length}
+         */
+        calcOverdueCount: function (aInvoices) {
+            if (!aInvoices) return 0;
+            return aInvoices.filter(function (i) { return i.InvoiceStatus === "Overdue"; }).length;
+        },
+
+        /**
+         * Count of Pending invoices.
+         * Replaces: {= ${/invoices}.filter(function(i){return i.InvoiceStatus==='Pending';}).length}
+         */
+        calcPendingCount: function (aInvoices) {
+            if (!aInvoices) return 0;
+            return aInvoices.filter(function (i) { return i.InvoiceStatus === "Pending"; }).length;
         }
+
     });
 });

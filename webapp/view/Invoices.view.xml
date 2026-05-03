@@ -13,9 +13,9 @@
                 </contentLeft>
                 <contentRight>
                     <Select id="invoiceFilter" change=".onFilterChange">
-                        <core:Item key="All" text="All Status" />
+                        <core:Item key="All"     text="All Status" />
                         <core:Item key="Pending" text="Pending" />
-                        <core:Item key="Paid" text="Paid" />
+                        <core:Item key="Paid"    text="Paid" />
                         <core:Item key="Overdue" text="Overdue" />
                     </Select>
                 </contentRight>
@@ -25,36 +25,70 @@
         <content>
             <VBox class="sapUiMediumMargin">
 
-                <!-- Summary Cards -->
+                <!-- Summary Tiles -->
                 <HBox class="sapUiSmallMarginBottom" wrap="Wrap">
-                    <GenericTile class="sapUiSmallMarginEnd" header="Total Invoiced" subheader="All invoices">
-                        <TileContent unit="INR">
-                            <NumericContent value="{= Math.round(${/invoices}.reduce(function(s,i){return s+i.Amount;},0)/100000)}"
-                                            scale="L" valueColor="Good" />
-                        </TileContent>
+
+                    <GenericTile header="Total Invoiced" subheader="All invoices"
+                                 backgroundColor="#107E3E"
+                                 class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <tileContent>
+                            <TileContent unit="INR">
+                                <!--
+                                    FIX: .reduce() inside expression binding crashes UI5 parser.
+                                    Use formatter function in controller instead.
+                                -->
+                                <NumericContent
+                                    value="{path:'/invoices', formatter:'.calcTotalInvoiced'}"
+                                    scale="L" valueColor="Good" withMargin="false" />
+                            </TileContent>
+                        </tileContent>
                     </GenericTile>
-                    <GenericTile class="sapUiSmallMarginEnd" header="Overdue Invoices" subheader="Needs Attention">
-                        <TileContent>
-                            <NumericContent value="{= ${/invoices}.filter(function(i){return i.InvoiceStatus==='Overdue';}).length}"
-                                            valueColor="Critical" />
-                        </TileContent>
+
+                    <GenericTile header="Overdue Invoices" subheader="Needs Attention"
+                                 backgroundColor="#BB0000"
+                                 class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <tileContent>
+                            <TileContent unit="Invoices">
+                                <!--
+                                    FIX: .filter() inside expression binding crashes UI5 parser.
+                                    Use formatter function in controller instead.
+                                -->
+                                <NumericContent
+                                    value="{path:'/invoices', formatter:'.calcOverdueCount'}"
+                                    valueColor="Critical" withMargin="false" />
+                            </TileContent>
+                        </tileContent>
                     </GenericTile>
-                    <GenericTile header="Pending Payment" subheader="Awaiting">
-                        <TileContent>
-                            <NumericContent value="{= ${/invoices}.filter(function(i){return i.InvoiceStatus==='Pending';}).length}"
-                                            valueColor="Neutral" />
-                        </TileContent>
+
+                    <GenericTile header="Pending Payment" subheader="Awaiting"
+                                 backgroundColor="#E76500"
+                                 class="sapUiSmallMarginBottom">
+                        <tileContent>
+                            <TileContent unit="Invoices">
+                                <!--
+                                    FIX: .filter() inside expression binding crashes UI5 parser.
+                                    Use formatter function in controller instead.
+                                -->
+                                <NumericContent
+                                    value="{path:'/invoices', formatter:'.calcPendingCount'}"
+                                    valueColor="Neutral" withMargin="false" />
+                            </TileContent>
+                        </tileContent>
                     </GenericTile>
+
                 </HBox>
 
+                <!-- Invoices Table — all row-level bindings were fine, kept as-is -->
                 <Table id="invoicesTable" items="{/invoices}"
                        noDataText="No invoices found."
-                       growing="true" growingThreshold="10">
+                       growing="true" growingThreshold="10"
+                       alternateRowColors="true" showSeparators="Inner">
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="Invoices ({= ${/invoices} ? ${/invoices}.length : 0})" />
+                            <core:Icon src="sap-icon://document-text" color="#0070F3" class="sapUiTinyMarginEnd" />
+                            <Title text="Invoices" />
                             <ToolbarSpacer />
-                            <Button icon="sap-icon://refresh" press=".onRefresh" />
+                            <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="Refresh" type="Transparent" />
                         </Toolbar>
                     </headerToolbar>
                     <columns>
@@ -67,7 +101,8 @@
                         <Column hAlign="Center"><Text text="Actions" /></Column>
                     </columns>
                     <items>
-                        <ColumnListItem type="Active">
+                        <ColumnListItem type="Active"
+                            highlight="{path:'InvoiceStatus', formatter:'.formatStatusState'}">
                             <cells>
                                 <ObjectIdentifier title="{InvoiceId}" />
                                 <Link text="{OrderId}" press=".onOrderLink" />
@@ -76,8 +111,10 @@
                                               state="None" emphasized="true" />
                                 <Text text="{DueDate}" />
                                 <ObjectStatus text="{InvoiceStatus}"
-                                              state="{path:'InvoiceStatus', formatter:'.formatStatusState'}" />
+                                              state="{path:'InvoiceStatus', formatter:'.formatStatusState'}"
+                                              inverted="true" />
                                 <HBox>
+                                    <!-- Row-level single-property expressions are fine -->
                                     <Button text="Record Payment" icon="sap-icon://payment-approval"
                                             type="Transparent" press=".onRecordPayment"
                                             visible="{= ${InvoiceStatus} !== 'Paid'}" />
@@ -89,10 +126,11 @@
                         </ColumnListItem>
                     </items>
                 </Table>
+
             </VBox>
         </content>
 
-        <!-- Payment Dialog -->
+        <!-- Payment Dialog — unchanged -->
         <dependents>
             <Dialog id="paymentDialog" title="Record Payment" contentWidth="420px">
                 <content>
@@ -106,11 +144,11 @@
                                class="sapUiSmallMarginBottom" />
                         <Label text="Payment Mode" required="true" />
                         <Select id="payMode" class="sapUiSmallMarginBottom">
-                            <core:Item key="NEFT" text="NEFT" />
-                            <core:Item key="RTGS" text="RTGS" />
+                            <core:Item key="NEFT"   text="NEFT" />
+                            <core:Item key="RTGS"   text="RTGS" />
                             <core:Item key="Cheque" text="Cheque" />
-                            <core:Item key="UPI" text="UPI" />
-                            <core:Item key="Cash" text="Cash" />
+                            <core:Item key="UPI"    text="UPI" />
+                            <core:Item key="Cash"   text="Cash" />
                         </Select>
                         <Label text="Payment Date" required="true" />
                         <DatePicker id="payDate" value=""
@@ -128,5 +166,6 @@
                 </endButton>
             </Dialog>
         </dependents>
+
     </Page>
 </mvc:View>
