@@ -1,0 +1,74 @@
+[
+  {
+    "ItemId": "ITM-001",
+    "OrderId": "ORD-2024-001",
+    "ProductId": "P001",
+    "ProductName": "SAP S/4HANA License",
+    "Quantity": 3,
+    "UnitPrice": 250000,
+    "ItemTotal": 750000
+  },
+  {
+    "ItemId": "ITM-002",
+    "OrderId": "ORD-2024-001",
+    "ProductId": "P002",
+    "ProductName": "Enterprise Server Rack",
+    "UnitPrice": 500000,
+    "Quantity": 1,
+    "ItemTotal": 500000
+  },
+  {
+    "ItemId": "ITM-003",
+    "OrderId": "ORD-2024-002",
+    "ProductId": "P005",
+    "ProductName": "SAP Fiori Implementation",
+    "Quantity": 1,
+    "UnitPrice": 500000,
+    "ItemTotal": 500000
+  },
+  {
+    "ItemId": "ITM-004",
+    "OrderId": "ORD-2024-002",
+    "ProductId": "P004",
+    "ProductName": "Cloud Storage 10TB",
+    "Quantity": 3,
+    "UnitPrice": 120000,
+    "ItemTotal": 360000
+  },
+  {
+    "ItemId": "ITM-005",
+    "OrderId": "ORD-2024-003",
+    "ProductId": "P001",
+    "ProductName": "SAP S/4HANA License",
+    "Quantity": 1,
+    "UnitPrice": 250000,
+    "ItemTotal": 250000
+  },
+  {
+    "ItemId": "ITM-006",
+    "OrderId": "ORD-2024-003",
+    "ProductId": "P006",
+    "ProductName": "Database Oracle License",
+    "Quantity": 1,
+    "UnitPrice": 350000,
+    "ItemTotal": 350000
+  },
+  {
+    "ItemId": "ITM-007",
+    "OrderId": "ORD-2024-005",
+    "ProductId": "P007",
+    "ProductName": "Laptop HP EliteBook",
+    "Quantity": 5,
+    "UnitPrice": 95000,
+    "ItemTotal": 475000
+  },
+  {
+    "ItemId": "ITM-008",
+    "OrderId": "ORD-2024-005",
+    "ProductId": "P003",
+    "ProductName": "Network Switch 48-Port",
+    "Quantity": 2,
+    "UnitPrice": 45000,
+    "ItemTotal": 90000
+  }
+]

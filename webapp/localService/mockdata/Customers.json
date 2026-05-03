@@ -1,0 +1,62 @@
+[
+  {
+    "CustomerId": "C001",
+    "CustomerName": "Tata Consultancy Services",
+    "Email": "procurement@tcs.com",
+    "Phone": "+91-22-6778-9999",
+    "Address": "TCS House, Raveline St, Fort, Mumbai 400001",
+    "CreditLimit": 5000000,
+    "UsedCredit": 1200000,
+    "Status": "Active"
+  },
+  {
+    "CustomerId": "C002",
+    "CustomerName": "Infosys Limited",
+    "Email": "vendor@infosys.com",
+    "Phone": "+91-80-2852-0261",
+    "Address": "Electronics City, Hosur Rd, Bengaluru 560100",
+    "CreditLimit": 3000000,
+    "UsedCredit": 2900000,
+    "Status": "Active"
+  },
+  {
+    "CustomerId": "C003",
+    "CustomerName": "Wipro Technologies",
+    "Email": "supply@wipro.com",
+    "Phone": "+91-80-2844-0011",
+    "Address": "Doddakannelli, Sarjapur Rd, Bengaluru 560035",
+    "CreditLimit": 2000000,
+    "UsedCredit": 500000,
+    "Status": "Active"
+  },
+  {
+    "CustomerId": "C004",
+    "CustomerName": "HCL Technologies",
+    "Email": "purchase@hcl.com",
+    "Phone": "+91-120-433-3333",
+    "Address": "806, Siddharth, 96 Nehru Place, New Delhi 110019",
+    "CreditLimit": 1500000,
+    "UsedCredit": 1500000,
+    "Status": "On Hold"
+  },
+  {
+    "CustomerId": "C005",
+    "CustomerName": "Tech Mahindra",
+    "Email": "orders@techmahindra.com",
+    "Phone": "+91-20-6601-8100",
+    "Address": "Gateway Building, Apollo Bunder, Mumbai 400001",
+    "CreditLimit": 800000,
+    "UsedCredit": 200000,
+    "Status": "Active"
+  },
+  {
+    "CustomerId": "C006",
+    "CustomerName": "Larsen & Toubro",
+    "Email": "vendor@lntecc.com",
+    "Phone": "+91-22-6752-5656",
+    "Address": "L&T House, Ballard Estate, Mumbai 400001",
+    "CreditLimit": 10000000,
+    "UsedCredit": 3000000,
+    "Status": "Active"
+  }
+]

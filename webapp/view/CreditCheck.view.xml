@@ -5,12 +5,12 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Page title="Credit Check">
+    <Page title="{i18n>pageCreditCheck}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Customer Credit Check" />
+                    <Title text="{i18n>pageCustomerCreditCheck}" />
                 </contentLeft>
             </Bar>
         </customHeader>
@@ -19,28 +19,28 @@
             <VBox class="sapUiMediumMargin">
 
                 <!-- Check Form -->
-                <Panel headerText="Run Credit Check" expandable="false" class="sapUiSmallMarginBottom">
+                <Panel headerText="{i18n>btnRunCreditCheck}" expandable="false" class="sapUiSmallMarginBottom">
                     <f:SimpleForm editable="true" layout="ColumnLayout" columnsL="2" columnsM="1">
                         <f:content>
-                            <Label text="Select Customer" required="true" />
+                            <Label text="{i18n>colCustomer}" required="true" />
                             <Select id="ccCustomer" selectedKey="">
-                                <core:Item key="" text="-- Select Customer --" />
+                                <core:Item key="" text="{i18n>selectCustomer}" />
                             </Select>
 
-                            <Label text="Order Amount (₹)" required="true" />
-                            <Input id="ccAmount" type="Number" placeholder="Enter order amount" />
+                            <Label text="Order Amount (â‚¹)" required="true" />
+                            <Input id="ccAmount" type="Number" placeholder="{i18n>phOrderAmount}" />
                         </f:content>
                     </f:SimpleForm>
                     <HBox class="sapUiSmallMargin">
-                        <Button text="Run Credit Check" icon="sap-icon://credit-card"
+                        <Button text="{i18n>btnRunCreditCheck}" icon="sap-icon://credit-card"
                                 type="Emphasized" press=".onRunCheck" />
-                        <Button text="Reset" icon="sap-icon://refresh"
+                        <Button text="{i18n>btnReset}" icon="sap-icon://refresh"
                                 type="Default" press=".onReset" class="sapUiSmallMarginBegin" />
                     </HBox>
                 </Panel>
 
                 <!-- Result Panel -->
-                <Panel id="resultPanel" headerText="Credit Check Result"
+                <Panel id="resultPanel" headerText="{i18n>pageCreditCheck}"
                        expandable="false" visible="false">
                     <VBox class="sapUiSmallMargin">
 
@@ -51,34 +51,34 @@
                         <!-- Details -->
                         <f:SimpleForm editable="false" layout="ColumnLayout" columnsL="3" columnsM="2">
                             <f:content>
-                                <Label text="Customer" />
+                                <Label text="{i18n>colCustomer}" />
                                 <Text id="resCustomerName" text="" />
 
-                                <Label text="Credit Limit" />
+                                <Label text="{i18n>colCreditLimit}" />
                                 <ObjectNumber id="resCreditLimit" number="" state="None" />
 
-                                <Label text="Used Credit" />
+                                <Label text="{i18n>colUsedCredit}" />
                                 <ObjectNumber id="resUsedCredit" number="" state="None" />
 
-                                <Label text="Available Credit" />
+                                <Label text="{i18n>colAvailable}" />
                                 <ObjectNumber id="resAvailCredit" number="" state="None" />
 
-                                <Label text="Order Amount" />
+                                <Label text="{i18n>labelOrderAmount}" />
                                 <ObjectNumber id="resOrderAmount" number="" state="None" />
 
-                                <Label text="Credit Utilization" />
+                                <Label text="{i18n>colUtilization}" />
                                 <Text id="resCreditUtil" text="" />
                             </f:content>
                         </f:SimpleForm>
 
                         <!-- Progress Bar -->
-                        <Label text="Credit Utilization After Order:" class="sapUiSmallMarginTop" />
+                        <Label text="{i18n>labelCreditUtilizationAfterOrder}" class="sapUiSmallMarginTop" />
                         <ProgressIndicator id="creditProgress" percentValue="0"
                                            displayValue="0%" showValue="true" state="Success"
                                            class="sapUiSmallMarginBottom" />
 
                         <!-- Recommendation -->
-                        <Panel headerText="Recommendation" class="sapUiSmallMarginTop">
+                        <Panel headerText="{i18n>labelRecommendation}" class="sapUiSmallMarginTop">
                             <Text id="resRecommendation" text="" class="sapUiSmallMargin"
                                   wrapping="true" />
                         </Panel>
@@ -86,16 +86,16 @@
                 </Panel>
 
                 <!-- All Customers Credit Overview -->
-                <Panel headerText="Customer Credit Overview" expandable="true" expanded="true"
+                <Panel headerText="{i18n>pageCustomerCreditCheck}" expandable="true" expanded="true"
                        class="sapUiSmallMarginTop">
-                    <Table items="{/customers}" noDataText="No customers">
+                    <Table items="{/customers}" noDataText="{i18n>noCustomer}">
                         <columns>
-                            <Column><Text text="Customer" /></Column>
-                            <Column hAlign="End"><Text text="Credit Limit" /></Column>
-                            <Column hAlign="End"><Text text="Used Credit" /></Column>
-                            <Column hAlign="End"><Text text="Available" /></Column>
-                            <Column hAlign="Center"><Text text="Utilization" /></Column>
-                            <Column hAlign="Center"><Text text="Status" /></Column>
+                            <Column><Text text="{i18n>colCustomer}" /></Column>
+                            <Column hAlign="End"><Text text="{i18n>colCreditLimit}" /></Column>
+                            <Column hAlign="End"><Text text="{i18n>colUsedCredit}" /></Column>
+                            <Column hAlign="End"><Text text="{i18n>statusAvailable}" /></Column>
+                            <Column hAlign="Center"><Text text="{i18n>colUtilization}" /></Column>
+                            <Column hAlign="Center"><Text text="{i18n>colStatus}" /></Column>
                         </columns>
                         <items>
                             <ColumnListItem>
@@ -122,3 +122,4 @@
         </content>
     </Page>
 </mvc:View>
+

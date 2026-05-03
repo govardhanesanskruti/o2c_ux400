@@ -4,26 +4,26 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <Page title="Sales Orders">
+    <Page title="{i18n>pageOrders}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Sales Orders" />
+                    <Title text="{i18n>pageOrders}" />
                 </contentLeft>
                 <contentRight>
-                    <SearchField placeholder="Search orders..." search=".onSearch"
+                    <SearchField placeholder="{i18n>searchOrders}" search=".onSearch"
                                  liveChange=".onSearch" width="250px" />
                     <Select id="statusFilter" change=".onStatusFilter">
-                        <core:Item key="All" text="All Status" />
-                        <core:Item key="Draft" text="Draft" />
-                        <core:Item key="Pending Approval" text="Pending Approval" />
-                        <core:Item key="Processing" text="Processing" />
-                        <core:Item key="Shipped" text="Shipped" />
-                        <core:Item key="Delivered" text="Delivered" />
-                        <core:Item key="Cancelled" text="Cancelled" />
+                        <core:Item key="All" text="{i18n>statusAll}" />
+                        <core:Item key="Draft" text="{i18n>statusDraft}" />
+                        <core:Item key="Pending Approval" text="{i18n>statusPendingApproval}" />
+                        <core:Item key="Processing" text="{i18n>statusProcessing}" />
+                        <core:Item key="Shipped" text="{i18n>statusShipped}" />
+                        <core:Item key="Delivered" text="{i18n>statusDelivered}" />
+                        <core:Item key="Cancelled" text="{i18n>statusCancelled}" />
                     </Select>
-                    <Button text="New Order" icon="sap-icon://add-document"
+                    <Button text="{i18n>btnNewOrder}" icon="sap-icon://add-document"
                             type="Emphasized" press=".onCreateOrder" />
                 </contentRight>
             </Bar>
@@ -31,24 +31,24 @@
 
         <content>
             <Table id="ordersTable" items="{/orders}"
-                   noDataText="No orders found. Create your first order."
+                   noDataText="{i18n>noOrders}"
                    growing="true" growingThreshold="10"
                    mode="None">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="Sales Orders ({= ${/orders} ? ${/orders}.length : 0})" />
                         <ToolbarSpacer />
-                        <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="Refresh" />
+                        <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="{i18n>tooltipRefresh}" />
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                    <Column width="10rem"><Text text="Order ID" /></Column>
-                    <Column><Text text="Customer" /></Column>
-                    <Column><Text text="Order Date" /></Column>
-                    <Column hAlign="End"><Text text="Total Amount" /></Column>
-                    <Column hAlign="Center"><Text text="Credit Status" /></Column>
-                    <Column hAlign="Center"><Text text="Order Status" /></Column>
-                    <Column hAlign="Center"><Text text="Actions" /></Column>
+                    <Column width="10rem"><Text text="{i18n>colOrderId}" /></Column>
+                    <Column><Text text="{i18n>colCustomer}" /></Column>
+                    <Column><Text text="{i18n>colOrderDate}" /></Column>
+                    <Column hAlign="End"><Text text="{i18n>colTotalAmount}" /></Column>
+                    <Column hAlign="Center"><Text text="{i18n>colCreditStatus}" /></Column>
+                    <Column hAlign="Center"><Text text="{i18n>colOrderStatus}" /></Column>
+                    <Column hAlign="Center"><Text text="{i18n>colActions}" /></Column>
                 </columns>
                 <items>
                     <ColumnListItem type="Navigation" press=".onOrderPress">
@@ -60,9 +60,9 @@
                             <ObjectStatus text="{CreditStatus}" state="{path:'CreditStatus', formatter:'.formatStatusState'}" />
                             <ObjectStatus text="{OrderStatus}" state="{path:'OrderStatus', formatter:'.formatStatusState'}" />
                             <HBox>
-                                <Button icon="sap-icon://detail-view" tooltip="View Details"
+                                <Button icon="sap-icon://detail-view" tooltip="{i18n>tooltipViewDetails}"
                                         type="Transparent" press=".onViewDetail" />
-                                <Button icon="sap-icon://delete" tooltip="Cancel Order"
+                                <Button icon="sap-icon://delete" tooltip="{i18n>tooltipCancelOrder}"
                                         type="Transparent" press=".onCancelOrder" />
                             </HBox>
                         </cells>
@@ -72,3 +72,4 @@
         </content>
     </Page>
 </mvc:View>
+

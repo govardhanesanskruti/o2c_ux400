@@ -4,19 +4,19 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <Page title="Invoices">
+    <Page title="{i18n>pageInvoices}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Invoice Management" />
+                    <Title text="{i18n>pageInvoiceManagement}" />
                 </contentLeft>
                 <contentRight>
                     <Select id="invoiceFilter" change=".onFilterChange">
-                        <core:Item key="All"     text="All Status" />
-                        <core:Item key="Pending" text="Pending" />
-                        <core:Item key="Paid"    text="Paid" />
-                        <core:Item key="Overdue" text="Overdue" />
+                        <core:Item key="All"     text="{i18n>statusAll}" />
+                        <core:Item key="Pending" text="{i18n>statusPending}" />
+                        <core:Item key="Paid"    text="{i18n>statusPaid}" />
+                        <core:Item key="Overdue" text="{i18n>statusOverdue}" />
                     </Select>
                 </contentRight>
             </Bar>
@@ -78,27 +78,27 @@
 
                 </HBox>
 
-                <!-- Invoices Table — all row-level bindings were fine, kept as-is -->
+                <!-- Invoices Table â€” all row-level bindings were fine, kept as-is -->
                 <Table id="invoicesTable" items="{/invoices}"
-                       noDataText="No invoices found."
+                       noDataText="{i18n>noInvoices}"
                        growing="true" growingThreshold="10"
                        alternateRowColors="true" showSeparators="Inner">
                     <headerToolbar>
                         <Toolbar>
                             <core:Icon src="sap-icon://document-text" color="#0070F3" class="sapUiTinyMarginEnd" />
-                            <Title text="Invoices" />
+                            <Title text="{i18n>pageInvoices}" />
                             <ToolbarSpacer />
-                            <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="Refresh" type="Transparent" />
+                            <Button icon="sap-icon://refresh" press=".onRefresh" tooltip="{i18n>tooltipRefresh}" type="Transparent" />
                         </Toolbar>
                     </headerToolbar>
                     <columns>
-                        <Column><Text text="Invoice ID" /></Column>
-                        <Column><Text text="Order ID" /></Column>
-                        <Column><Text text="Invoice Date" /></Column>
-                        <Column hAlign="End"><Text text="Amount (₹)" /></Column>
-                        <Column><Text text="Due Date" /></Column>
-                        <Column hAlign="Center"><Text text="Status" /></Column>
-                        <Column hAlign="Center"><Text text="Actions" /></Column>
+                        <Column><Text text="{i18n>colInvoiceId}" /></Column>
+                        <Column><Text text="{i18n>colOrderId}" /></Column>
+                        <Column><Text text="{i18n>colInvoiceDate}" /></Column>
+                        <Column hAlign="End"><Text text="Amount (â‚¹)" /></Column>
+                        <Column><Text text="{i18n>colDueDate}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colStatus}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colActions}" /></Column>
                     </columns>
                     <items>
                         <ColumnListItem type="Active"
@@ -115,10 +115,10 @@
                                               inverted="true" />
                                 <HBox>
                                     <!-- Row-level single-property expressions are fine -->
-                                    <Button text="Record Payment" icon="sap-icon://payment-approval"
+                                    <Button text="{i18n>btnRecordPayment}" icon="sap-icon://payment-approval"
                                             type="Transparent" press=".onRecordPayment"
                                             visible="{= ${InvoiceStatus} !== 'Paid'}" />
-                                    <Button text="Mark Overdue" icon="sap-icon://alert"
+                                    <Button text="{i18n>btnMarkOverdue}" icon="sap-icon://alert"
                                             type="Transparent" press=".onMarkOverdue"
                                             visible="{= ${InvoiceStatus} === 'Pending'}" />
                                 </HBox>
@@ -130,19 +130,19 @@
             </VBox>
         </content>
 
-        <!-- Payment Dialog — unchanged -->
+        <!-- Payment Dialog â€” unchanged -->
         <dependents>
-            <Dialog id="paymentDialog" title="Record Payment" contentWidth="420px">
+            <Dialog id="paymentDialog" title="{i18n>btnRecordPayment}" contentWidth="420px">
                 <content>
                     <VBox class="sapUiSmallMargin">
-                        <Label text="Invoice ID" />
+                        <Label text="{i18n>colInvoiceId}" />
                         <Text id="payInvoiceId" text="" class="sapUiSmallMarginBottom" />
-                        <Label text="Invoice Amount" />
+                        <Label text="{i18n>labelInvoiceAmount}" />
                         <Text id="payInvoiceAmt" text="" class="sapUiSmallMarginBottom" />
-                        <Label text="Amount Paid (₹)" required="true" />
-                        <Input id="payAmount" type="Number" placeholder="Enter amount paid"
+                        <Label text="Amount Paid (â‚¹)" required="true" />
+                        <Input id="payAmount" type="Number" placeholder="{i18n>phAmountPaid}"
                                class="sapUiSmallMarginBottom" />
-                        <Label text="Payment Mode" required="true" />
+                        <Label text="{i18n>colPaymentMode}" required="true" />
                         <Select id="payMode" class="sapUiSmallMarginBottom">
                             <core:Item key="NEFT"   text="NEFT" />
                             <core:Item key="RTGS"   text="RTGS" />
@@ -150,22 +150,23 @@
                             <core:Item key="UPI"    text="UPI" />
                             <core:Item key="Cash"   text="Cash" />
                         </Select>
-                        <Label text="Payment Date" required="true" />
+                        <Label text="{i18n>colPaymentDate}" required="true" />
                         <DatePicker id="payDate" value=""
                                     displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd"
                                     class="sapUiSmallMarginBottom" />
-                        <Label text="Remarks" />
-                        <TextArea id="payRemarks" rows="2" placeholder="Optional remarks..." />
+                        <Label text="{i18n>colRemarks}" />
+                        <TextArea id="payRemarks" rows="2" placeholder="{i18n>phOptionalRemarks}" />
                     </VBox>
                 </content>
                 <beginButton>
-                    <Button text="Record Payment" type="Emphasized" press=".onConfirmPayment" />
+                    <Button text="{i18n>btnRecordPayment}" type="Emphasized" press=".onConfirmPayment" />
                 </beginButton>
                 <endButton>
-                    <Button text="Cancel" press=".onCancelPayment" />
+                    <Button text="{i18n>btnCancel}" press=".onCancelPayment" />
                 </endButton>
             </Dialog>
         </dependents>
 
     </Page>
 </mvc:View>
+

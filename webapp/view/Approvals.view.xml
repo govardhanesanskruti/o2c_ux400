@@ -4,19 +4,19 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <Page title="Credit Approvals">
+    <Page title="{i18n>pageApprovals}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Credit Approval Workbench" />
+                    <Title text="{i18n>pageApprovalWorkbench}" />
                 </contentLeft>
                 <contentRight>
                     <Select id="approvalFilter" change=".onFilterChange">
-                        <core:Item key="All" text="All" />
-                        <core:Item key="Pending" text="Pending" />
-                        <core:Item key="Approved" text="Approved" />
-                        <core:Item key="Rejected" text="Rejected" />
+                        <core:Item key="All" text="{i18n>all}" />
+                        <core:Item key="Pending" text="{i18n>statusPending}" />
+                        <core:Item key="Approved" text="{i18n>statusApproved}" />
+                        <core:Item key="Rejected" text="{i18n>statusRejected}" />
                     </Select>
                 </contentRight>
             </Bar>
@@ -27,32 +27,32 @@
 
                 <!-- Summary Info Bars -->
                 <HBox class="sapUiSmallMarginBottom" wrap="Wrap">
-                    <ObjectStatus text="Pending Approvals" state="Warning" class="sapUiSmallMarginEnd"
+                    <ObjectStatus text="{i18n>dashPendingApprovals}" state="Warning" class="sapUiSmallMarginEnd"
                                   icon="sap-icon://pending" />
-                    <ObjectStatus text="Total Records" state="None" class="sapUiSmallMarginEnd"
+                    <ObjectStatus text="{i18n>labelTotalRecords}" state="None" class="sapUiSmallMarginEnd"
                                   icon="sap-icon://list" />
                 </HBox>
 
                 <Table id="approvalsTable" items="{/approvals}"
-                       noDataText="No approval records found"
+                       noDataText="{i18n>noApprovals}"
                        mode="SingleSelectLeft" selectionChange=".onApprovalSelect">
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="Approval Records" />
+                            <Title text="{i18n>pageApprovals}" />
                             <ToolbarSpacer />
-                            <Button id="btnBulkApprove" text="Approve Selected"
+                            <Button id="btnBulkApprove" text="{i18n>btnApproveSelected}"
                                     icon="sap-icon://accept" type="Accept"
                                     press=".onBulkApprove" enabled="false" />
                         </Toolbar>
                     </headerToolbar>
                     <columns>
-                        <Column width="8rem"><Text text="Approval ID" /></Column>
-                        <Column width="10rem"><Text text="Order ID" /></Column>
-                        <Column hAlign="Center"><Text text="Decision" /></Column>
-                        <Column><Text text="Remarks" /></Column>
-                        <Column><Text text="Approved By" /></Column>
-                        <Column><Text text="Approved On" /></Column>
-                        <Column hAlign="Center"><Text text="Actions" /></Column>
+                        <Column width="8rem"><Text text="{i18n>colApprovalId}" /></Column>
+                        <Column width="10rem"><Text text="{i18n>colOrderId}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colDecision}" /></Column>
+                        <Column><Text text="{i18n>colRemarks}" /></Column>
+                        <Column><Text text="{i18n>colApprovedBy}" /></Column>
+                        <Column><Text text="{i18n>colApprovedOn}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colActions}" /></Column>
                     </columns>
                     <items>
                         <ColumnListItem type="Active" press=".onApprovalPress">
@@ -64,10 +64,10 @@
                                 <Text text="{ApprovedBy}" />
                                 <Text text="{ApprovedOn}" />
                                 <HBox>
-                                    <Button text="Approve" icon="sap-icon://accept" type="Accept"
+                                    <Button text="{i18n>btnApprove}" icon="sap-icon://accept" type="Accept"
                                             press=".onApprove"
                                             visible="{= ${Decision} === 'Pending'}" />
-                                    <Button text="Reject" icon="sap-icon://decline" type="Reject"
+                                    <Button text="{i18n>btnReject}" icon="sap-icon://decline" type="Reject"
                                             press=".onReject"
                                             visible="{= ${Decision} === 'Pending'}"
                                             class="sapUiTinyMarginBegin" />
@@ -81,28 +81,29 @@
 
         <!-- Approval Dialog -->
         <dependents>
-            <Dialog id="approvalDialog" title="Process Approval" contentWidth="480px">
+            <Dialog id="approvalDialog" title="{i18n>dialogProcessApproval}" contentWidth="480px">
                 <content>
                     <VBox class="sapUiSmallMargin">
-                        <Label text="Order ID" />
+                        <Label text="{i18n>colOrderId}" />
                         <Text id="dlgOrderId" text="" class="sapUiSmallMarginBottom" />
-                        <Label text="Decision" required="true" />
+                        <Label text="{i18n>colDecision}" required="true" />
                         <Select id="dlgDecision" class="sapUiSmallMarginBottom">
-                            <core:Item key="Approved" text="✅ Approve" />
-                            <core:Item key="Rejected" text="❌ Reject" />
+                            <core:Item key="Approved" text="âœ… Approve" />
+                            <core:Item key="Rejected" text="âŒ Reject" />
                         </Select>
-                        <Label text="Remarks" required="true" />
+                        <Label text="{i18n>colRemarks}" required="true" />
                         <TextArea id="dlgRemarks" rows="4"
-                                  placeholder="Enter approval remarks..." />
+                                  placeholder="{i18n>phApprovalRemarks}" />
                     </VBox>
                 </content>
                 <beginButton>
-                    <Button text="Submit Decision" type="Emphasized" press=".onSubmitDecision" />
+                    <Button text="{i18n>btnSubmitDecision}" type="Emphasized" press=".onSubmitDecision" />
                 </beginButton>
                 <endButton>
-                    <Button text="Cancel" press=".onCancelDecision" />
+                    <Button text="{i18n>btnCancel}" press=".onCancelDecision" />
                 </endButton>
             </Dialog>
         </dependents>
     </Page>
 </mvc:View>
+

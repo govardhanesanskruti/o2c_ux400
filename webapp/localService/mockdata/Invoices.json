@@ -1,0 +1,34 @@
+[
+  {
+    "InvoiceId": "INV-2024-001",
+    "OrderId": "ORD-2024-001",
+    "InvoiceDate": "2024-01-16",
+    "Amount": 1250000,
+    "DueDate": "2024-02-15",
+    "InvoiceStatus": "Paid"
+  },
+  {
+    "InvoiceId": "INV-2024-002",
+    "OrderId": "ORD-2024-003",
+    "InvoiceDate": "2024-02-02",
+    "Amount": 450000,
+    "DueDate": "2024-03-03",
+    "InvoiceStatus": "Overdue"
+  },
+  {
+    "InvoiceId": "INV-2024-003",
+    "OrderId": "ORD-2024-005",
+    "InvoiceDate": "2024-02-19",
+    "Amount": 575000,
+    "DueDate": "2024-03-20",
+    "InvoiceStatus": "Pending"
+  },
+  {
+    "InvoiceId": "INV-2024-004",
+    "OrderId": "ORD-2024-006",
+    "InvoiceDate": "2024-03-02",
+    "Amount": 3200000,
+    "DueDate": "2024-04-01",
+    "InvoiceStatus": "Pending"
+  }
+]

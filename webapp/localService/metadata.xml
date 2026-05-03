@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0"
+    xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx"
+    xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata"
+    xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="O2CService" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="Customer">
+                <Key><PropertyRef Name="CustomerId" /></Key>
+                <Property Name="CustomerId" Type="Edm.String" Nullable="false" sap:label="Customer ID" />
+                <Property Name="CustomerName" Type="Edm.String" sap:label="Customer Name" />
+                <Property Name="Email" Type="Edm.String" sap:label="Email" />
+                <Property Name="Phone" Type="Edm.String" sap:label="Phone" />
+                <Property Name="Address" Type="Edm.String" sap:label="Address" />
+                <Property Name="CreditLimit" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Credit Limit" />
+                <Property Name="UsedCredit" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Used Credit" />
+                <Property Name="Status" Type="Edm.String" sap:label="Status" />
+            </EntityType>
+            <EntityType Name="Product">
+                <Key><PropertyRef Name="ProductId" /></Key>
+                <Property Name="ProductId" Type="Edm.String" Nullable="false" sap:label="Product ID" />
+                <Property Name="ProductName" Type="Edm.String" sap:label="Product Name" />
+                <Property Name="Category" Type="Edm.String" sap:label="Category" />
+                <Property Name="Price" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Unit Price" />
+                <Property Name="Stock" Type="Edm.Int32" sap:label="Stock" />
+                <Property Name="Status" Type="Edm.String" sap:label="Status" />
+            </EntityType>
+            <EntityType Name="Order">
+                <Key><PropertyRef Name="OrderId" /></Key>
+                <Property Name="OrderId" Type="Edm.String" Nullable="false" sap:label="Order ID" />
+                <Property Name="CustomerId" Type="Edm.String" sap:label="Customer ID" />
+                <Property Name="CustomerName" Type="Edm.String" sap:label="Customer" />
+                <Property Name="OrderDate" Type="Edm.String" sap:label="Order Date" />
+                <Property Name="TotalAmount" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Total Amount" />
+                <Property Name="CreditStatus" Type="Edm.String" sap:label="Credit Status" />
+                <Property Name="OrderStatus" Type="Edm.String" sap:label="Order Status" />
+            </EntityType>
+            <EntityType Name="OrderItem">
+                <Key><PropertyRef Name="ItemId" /></Key>
+                <Property Name="ItemId" Type="Edm.String" Nullable="false" sap:label="Item ID" />
+                <Property Name="OrderId" Type="Edm.String" sap:label="Order ID" />
+                <Property Name="ProductId" Type="Edm.String" sap:label="Product ID" />
+                <Property Name="ProductName" Type="Edm.String" sap:label="Product" />
+                <Property Name="Quantity" Type="Edm.Int32" sap:label="Quantity" />
+                <Property Name="UnitPrice" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Unit Price" />
+                <Property Name="ItemTotal" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Item Total" />
+            </EntityType>
+            <EntityType Name="Approval">
+                <Key><PropertyRef Name="ApprovalId" /></Key>
+                <Property Name="ApprovalId" Type="Edm.String" Nullable="false" sap:label="Approval ID" />
+                <Property Name="OrderId" Type="Edm.String" sap:label="Order ID" />
+                <Property Name="Decision" Type="Edm.String" sap:label="Decision" />
+                <Property Name="Remarks" Type="Edm.String" sap:label="Remarks" />
+                <Property Name="ApprovedBy" Type="Edm.String" sap:label="Approved By" />
+                <Property Name="ApprovedOn" Type="Edm.String" sap:label="Approved On" />
+            </EntityType>
+            <EntityType Name="Invoice">
+                <Key><PropertyRef Name="InvoiceId" /></Key>
+                <Property Name="InvoiceId" Type="Edm.String" Nullable="false" sap:label="Invoice ID" />
+                <Property Name="OrderId" Type="Edm.String" sap:label="Order ID" />
+                <Property Name="InvoiceDate" Type="Edm.String" sap:label="Invoice Date" />
+                <Property Name="Amount" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Amount" />
+                <Property Name="DueDate" Type="Edm.String" sap:label="Due Date" />
+                <Property Name="InvoiceStatus" Type="Edm.String" sap:label="Status" />
+            </EntityType>
+            <EntityType Name="Payment">
+                <Key><PropertyRef Name="PaymentId" /></Key>
+                <Property Name="PaymentId" Type="Edm.String" Nullable="false" sap:label="Payment ID" />
+                <Property Name="InvoiceId" Type="Edm.String" sap:label="Invoice ID" />
+                <Property Name="AmountPaid" Type="Edm.Decimal" Precision="15" Scale="2" sap:label="Amount Paid" />
+                <Property Name="PaymentDate" Type="Edm.String" sap:label="Payment Date" />
+                <Property Name="PaymentMode" Type="Edm.String" sap:label="Mode" />
+                <Property Name="PaymentStatus" Type="Edm.String" sap:label="Status" />
+            </EntityType>
+            <EntityContainer Name="O2CServiceEntities" m:IsDefaultEntityContainer="true">
+                <EntitySet Name="Customers" EntityType="O2CService.Customer" />
+                <EntitySet Name="Products" EntityType="O2CService.Product" />
+                <EntitySet Name="Orders" EntityType="O2CService.Order" />
+                <EntitySet Name="OrderItems" EntityType="O2CService.OrderItem" />
+                <EntitySet Name="Approvals" EntityType="O2CService.Approval" />
+                <EntitySet Name="Invoices" EntityType="O2CService.Invoice" />
+                <EntitySet Name="Payments" EntityType="O2CService.Payment" />
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

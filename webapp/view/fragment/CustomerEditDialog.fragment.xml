@@ -5,7 +5,7 @@
 
     <Dialog
         id="customerEditDialog"
-        title="Edit Customer — {/editCustomer/CustomerId}"
+        title="Edit Customer â€” {/editCustomer/CustomerId}"
         contentWidth="640px"
         draggable="true"
         resizable="true"
@@ -24,51 +24,51 @@
                     labelSpanM="12">
                     <f:content>
 
-                        <Label text="Customer ID" />
+                        <Label text="{i18n>colCustomerId}" />
                         <Input value="{/editCustomer/CustomerId}" enabled="false" />
 
-                        <Label text="Customer Name" required="true" />
+                        <Label text="{i18n>colCustomerName}" required="true" />
                         <Input
                             id="editName"
                             value="{/editCustomer/CustomerName}"
-                            placeholder="Enter customer name" />
+                            placeholder="{i18n>phCustomerName}" />
 
-                        <Label text="Email Address" required="true" />
+                        <Label text="{i18n>labelEmailAddress}" required="true" />
                         <Input
                             id="editEmail"
                             value="{/editCustomer/Email}"
                             type="Email"
                             placeholder="Enter email address" />
 
-                        <Label text="Phone Number" required="true" />
+                        <Label text="{i18n>labelPhoneNumber}" required="true" />
                         <Input
                             id="editPhone"
                             value="{/editCustomer/Phone}"
                             type="Tel"
                             placeholder="Enter phone number" />
 
-                        <Label text="Address" />
+                        <Label text="{i18n>colAddress}" />
                         <TextArea
                             id="editAddress"
                             value="{/editCustomer/Address}"
                             rows="3"
                             placeholder="Enter address" />
 
-                        <Label text="Credit Limit (₹)" />
+                        <Label text="Credit Limit (â‚¹)" />
                         <Input
                             id="editCreditLimit"
                             value="{/editCustomer/CreditLimit}"
                             type="Number"
                             placeholder="Enter credit limit" />
 
-                        <Label text="Used Credit (₹)" />
+                        <Label text="Used Credit (â‚¹)" />
                         <Input value="{/editCustomer/UsedCredit}" enabled="false" />
 
-                        <Label text="Status" />
+                        <Label text="{i18n>colStatus}" />
                         <Select selectedKey="{/editCustomer/Status}">
-                            <core:Item key="Active" text="Active" />
-                            <core:Item key="On Hold" text="On Hold" />
-                            <core:Item key="Inactive" text="Inactive" />
+                            <core:Item key="Active" text="{i18n>statusActive}" />
+                            <core:Item key="On Hold" text="{i18n>statusOnHold}" />
+                            <core:Item key="Inactive" text="{i18n>statusInactive}" />
                         </Select>
 
                     </f:content>
@@ -79,8 +79,8 @@
                     <HBox class="sapUiSmallMargin" alignItems="Center">
                         <VBox width="100%">
                             <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
-                                <Label text="Used: ₹{/editCustomer/UsedCredit}" />
-                                <Label text="Limit: ₹{/editCustomer/CreditLimit}" />
+                                <Label text="Used: â‚¹{/editCustomer/UsedCredit}" />
+                                <Label text="Limit: â‚¹{/editCustomer/CreditLimit}" />
                             </HBox>
                             <ProgressIndicator
                                 percentValue="{path: '/editCustomer', formatter: '.calcCreditPercent'}"
@@ -96,14 +96,14 @@
 
         <beginButton>
             <Button
-                text="Save Changes"
+                text="{i18n>btnSaveChanges}"
                 type="Emphasized"
                 icon="sap-icon://save"
                 press=".onSaveEdit" />
         </beginButton>
         <endButton>
             <Button
-                text="Cancel"
+                text="{i18n>btnCancel}"
                 type="Default"
                 press=".onCancelEdit" />
         </endButton>
@@ -111,3 +111,4 @@
     </Dialog>
 
 </core:FragmentDefinition>
+

@@ -1,0 +1,458 @@
+{
+  "currentUser": {
+    "name": "Sanskruti Govardhane",
+    "role": "Sales Manager",
+    "avatar": "SG"
+  },
+  "customers": [
+    {
+      "CustomerId": "C001",
+      "CustomerName": "Tata Consultancy Services",
+      "Email": "procurement@tcs.com",
+      "Phone": "+91-22-6778-9999",
+      "Address": "TCS House, Raveline St, Fort, Mumbai 400001",
+      "CreditLimit": 5000000,
+      "UsedCredit": 1200000,
+      "Status": "Active"
+    },
+    {
+      "CustomerId": "C002",
+      "CustomerName": "Infosys Limited",
+      "Email": "vendor@infosys.com",
+      "Phone": "+91-80-2852-0261",
+      "Address": "Electronics City, Hosur Rd, Bengaluru 560100",
+      "CreditLimit": 3000000,
+      "UsedCredit": 2900000,
+      "Status": "Active"
+    },
+    {
+      "CustomerId": "C003",
+      "CustomerName": "Wipro Technologies",
+      "Email": "supply@wipro.com",
+      "Phone": "+91-80-2844-0011",
+      "Address": "Doddakannelli, Sarjapur Rd, Bengaluru 560035",
+      "CreditLimit": 2000000,
+      "UsedCredit": 500000,
+      "Status": "Active"
+    },
+    {
+      "CustomerId": "C004",
+      "CustomerName": "HCL Technologies",
+      "Email": "purchase@hcl.com",
+      "Phone": "+91-120-433-3333",
+      "Address": "806, Siddharth, 96 Nehru Place, New Delhi 110019",
+      "CreditLimit": 1500000,
+      "UsedCredit": 1500000,
+      "Status": "On Hold"
+    },
+    {
+      "CustomerId": "C005",
+      "CustomerName": "Tech Mahindra",
+      "Email": "orders@techmahindra.com",
+      "Phone": "+91-20-6601-8100",
+      "Address": "Gateway Building, Apollo Bunder, Mumbai 400001",
+      "CreditLimit": 800000,
+      "UsedCredit": 200000,
+      "Status": "Active"
+    },
+    {
+      "CustomerId": "C006",
+      "CustomerName": "Larsen & Toubro",
+      "Email": "vendor@lntecc.com",
+      "Phone": "+91-22-6752-5656",
+      "Address": "L&T House, Ballard Estate, Mumbai 400001",
+      "CreditLimit": 10000000,
+      "UsedCredit": 3000000,
+      "Status": "Active"
+    }
+  ],
+  "products": [
+    {
+      "ProductId": "P001",
+      "ProductName": "SAP S/4HANA License",
+      "Category": "Software",
+      "Price": 250000,
+      "Stock": 999,
+      "Status": "Available"
+    },
+    {
+      "ProductId": "P002",
+      "ProductName": "Enterprise Server Rack",
+      "Category": "Hardware",
+      "Price": 850000,
+      "Stock": 15,
+      "Status": "Available"
+    },
+    {
+      "ProductId": "P003",
+      "ProductName": "Network Switch 48-Port",
+      "Category": "Hardware",
+      "Price": 45000,
+      "Stock": 50,
+      "Status": "Available"
+    },
+    {
+      "ProductId": "P004",
+      "ProductName": "Cloud Storage 10TB",
+      "Category": "Services",
+      "Price": 120000,
+      "Stock": 200,
+      "Status": "Available"
+    },
+    {
+      "ProductId": "P005",
+      "ProductName": "SAP Fiori Implementation",
+      "Category": "Services",
+      "Price": 500000,
+      "Stock": 999,
+      "Status": "Available"
+    },
+    {
+      "ProductId": "P006",
+      "ProductName": "Database Oracle License",
+      "Category": "Software",
+      "Price": 350000,
+      "Stock": 999,
+      "Status": "Available"
+    },
+    {
+      "ProductId": "P007",
+      "ProductName": "Laptop HP EliteBook",
+      "Category": "Hardware",
+      "Price": 95000,
+      "Stock": 3,
+      "Status": "Low Stock"
+    },
+    {
+      "ProductId": "P008",
+      "ProductName": "Cybersecurity Suite",
+      "Category": "Software",
+      "Price": 180000,
+      "Stock": 0,
+      "Status": "Out of Stock"
+    }
+  ],
+  "orders": [
+    {
+      "OrderId": "ORD-2024-001",
+      "CustomerId": "C001",
+      "CustomerName": "Tata Consultancy Services",
+      "OrderDate": "2024-01-15",
+      "TotalAmount": 1250000,
+      "CreditStatus": "Approved",
+      "OrderStatus": "Delivered"
+    },
+    {
+      "OrderId": "ORD-2024-002",
+      "CustomerId": "C002",
+      "CustomerName": "Infosys Limited",
+      "OrderDate": "2024-01-22",
+      "TotalAmount": 850000,
+      "CreditStatus": "Pending",
+      "OrderStatus": "Pending Approval"
+    },
+    {
+      "OrderId": "ORD-2024-003",
+      "CustomerId": "C003",
+      "CustomerName": "Wipro Technologies",
+      "OrderDate": "2024-02-01",
+      "TotalAmount": 450000,
+      "CreditStatus": "Approved",
+      "OrderStatus": "Processing"
+    },
+    {
+      "OrderId": "ORD-2024-004",
+      "CustomerId": "C004",
+      "CustomerName": "HCL Technologies",
+      "OrderDate": "2024-02-10",
+      "TotalAmount": 200000,
+      "CreditStatus": "Rejected",
+      "OrderStatus": "Cancelled"
+    },
+    {
+      "OrderId": "ORD-2024-005",
+      "CustomerId": "C005",
+      "CustomerName": "Tech Mahindra",
+      "OrderDate": "2024-02-18",
+      "TotalAmount": 575000,
+      "CreditStatus": "Approved",
+      "OrderStatus": "Shipped"
+    },
+    {
+      "OrderId": "ORD-2024-006",
+      "CustomerId": "C006",
+      "CustomerName": "Larsen & Toubro",
+      "OrderDate": "2024-03-01",
+      "TotalAmount": 3200000,
+      "CreditStatus": "Approved",
+      "OrderStatus": "Processing"
+    }
+  ],
+  "orderItems": [
+    {
+      "ItemId": "ITM-001",
+      "OrderId": "ORD-2024-001",
+      "ProductId": "P001",
+      "ProductName": "SAP S/4HANA License",
+      "Quantity": 3,
+      "UnitPrice": 250000,
+      "ItemTotal": 750000
+    },
+    {
+      "ItemId": "ITM-002",
+      "OrderId": "ORD-2024-001",
+      "ProductId": "P002",
+      "ProductName": "Enterprise Server Rack",
+      "UnitPrice": 500000,
+      "Quantity": 1,
+      "ItemTotal": 500000
+    },
+    {
+      "ItemId": "ITM-003",
+      "OrderId": "ORD-2024-002",
+      "ProductId": "P005",
+      "ProductName": "SAP Fiori Implementation",
+      "Quantity": 1,
+      "UnitPrice": 500000,
+      "ItemTotal": 500000
+    },
+    {
+      "ItemId": "ITM-004",
+      "OrderId": "ORD-2024-002",
+      "ProductId": "P004",
+      "ProductName": "Cloud Storage 10TB",
+      "Quantity": 3,
+      "UnitPrice": 120000,
+      "ItemTotal": 360000
+    },
+    {
+      "ItemId": "ITM-005",
+      "OrderId": "ORD-2024-003",
+      "ProductId": "P001",
+      "ProductName": "SAP S/4HANA License",
+      "Quantity": 1,
+      "UnitPrice": 250000,
+      "ItemTotal": 250000
+    },
+    {
+      "ItemId": "ITM-006",
+      "OrderId": "ORD-2024-003",
+      "ProductId": "P006",
+      "ProductName": "Database Oracle License",
+      "Quantity": 1,
+      "UnitPrice": 350000,
+      "ItemTotal": 350000
+    },
+    {
+      "ItemId": "ITM-007",
+      "OrderId": "ORD-2024-005",
+      "ProductId": "P007",
+      "ProductName": "Laptop HP EliteBook",
+      "Quantity": 5,
+      "UnitPrice": 95000,
+      "ItemTotal": 475000
+    },
+    {
+      "ItemId": "ITM-008",
+      "OrderId": "ORD-2024-005",
+      "ProductId": "P003",
+      "ProductName": "Network Switch 48-Port",
+      "Quantity": 2,
+      "UnitPrice": 45000,
+      "ItemTotal": 90000
+    }
+  ],
+  "approvals": [
+    {
+      "ApprovalId": "APR-001",
+      "OrderId": "ORD-2024-001",
+      "Decision": "Approved",
+      "Remarks": "Credit limit sufficient. Approved.",
+      "ApprovedBy": "Anita Shah",
+      "ApprovedOn": "2024-01-15"
+    },
+    {
+      "ApprovalId": "APR-002",
+      "OrderId": "ORD-2024-002",
+      "Decision": "Pending",
+      "Remarks": "Awaiting finance review.",
+      "ApprovedBy": "-",
+      "ApprovedOn": "-"
+    },
+    {
+      "ApprovalId": "APR-003",
+      "OrderId": "ORD-2024-003",
+      "Decision": "Approved",
+      "Remarks": "Within limit. Auto-approved.",
+      "ApprovedBy": "System",
+      "ApprovedOn": "2024-02-01"
+    },
+    {
+      "ApprovalId": "APR-004",
+      "OrderId": "ORD-2024-004",
+      "Decision": "Rejected",
+      "Remarks": "Customer credit limit exhausted.",
+      "ApprovedBy": "Anita Shah",
+      "ApprovedOn": "2024-02-10"
+    },
+    {
+      "ApprovalId": "APR-005",
+      "OrderId": "ORD-2024-005",
+      "Decision": "Approved",
+      "Remarks": "Credit verified. Order approved.",
+      "ApprovedBy": "Rajesh Kumar",
+      "ApprovedOn": "2024-02-18"
+    },
+    {
+      "ApprovalId": "APR-006",
+      "OrderId": "ORD-2024-006",
+      "Decision": "Approved",
+      "Remarks": "High-value order. Director approval obtained.",
+      "ApprovedBy": "Sunil Mehta",
+      "ApprovedOn": "2024-03-01"
+    }
+  ],
+  "invoices": [
+    {
+      "InvoiceId": "INV-2024-001",
+      "OrderId": "ORD-2024-001",
+      "InvoiceDate": "2024-01-16",
+      "Amount": 1250000,
+      "DueDate": "2024-02-15",
+      "InvoiceStatus": "Paid"
+    },
+    {
+      "InvoiceId": "INV-2024-002",
+      "OrderId": "ORD-2024-003",
+      "InvoiceDate": "2024-02-02",
+      "Amount": 450000,
+      "DueDate": "2024-03-03",
+      "InvoiceStatus": "Overdue"
+    },
+    {
+      "InvoiceId": "INV-2024-003",
+      "OrderId": "ORD-2024-005",
+      "InvoiceDate": "2024-02-19",
+      "Amount": 575000,
+      "DueDate": "2024-03-20",
+      "InvoiceStatus": "Pending"
+    },
+    {
+      "InvoiceId": "INV-2024-004",
+      "OrderId": "ORD-2024-006",
+      "InvoiceDate": "2024-03-02",
+      "Amount": 3200000,
+      "DueDate": "2024-04-01",
+      "InvoiceStatus": "Pending"
+    }
+  ],
+  "payments": [
+    {
+      "PaymentId": "PAY-001",
+      "InvoiceId": "INV-2024-001",
+      "AmountPaid": 1250000,
+      "PaymentDate": "2024-02-10",
+      "PaymentMode": "NEFT",
+      "PaymentStatus": "Completed"
+    },
+    {
+      "PaymentId": "PAY-002",
+      "InvoiceId": "INV-2024-002",
+      "AmountPaid": 200000,
+      "PaymentDate": "2024-02-28",
+      "PaymentMode": "Cheque",
+      "PaymentStatus": "Partial"
+    },
+    {
+      "PaymentId": "PAY-003",
+      "InvoiceId": "INV-2024-003",
+      "AmountPaid": 575000,
+      "PaymentDate": "2024-03-18",
+      "PaymentMode": "RTGS",
+      "PaymentStatus": "Pending"
+    }
+  ],
+  "dashboard": {
+    "totalOrders": 6,
+    "pendingApprovals": 1,
+    "totalRevenue": 6525000,
+    "overdueInvoices": 1,
+    "activeCustomers": 5,
+    "totalProducts": 8,
+    "ordersByStatus": [
+      {
+        "status": "Delivered",
+        "count": 1,
+        "color": "Success"
+      },
+      {
+        "status": "Processing",
+        "count": 2,
+        "color": "Information"
+      },
+      {
+        "status": "Shipped",
+        "count": 1,
+        "color": "Information"
+      },
+      {
+        "status": "Pending Approval",
+        "count": 1,
+        "color": "Warning"
+      },
+      {
+        "status": "Cancelled",
+        "count": 1,
+        "color": "Error"
+      }
+    ],
+    "recentActivity": [
+      {
+        "text": "ORD-2024-006 created for Larsen & Toubro",
+        "time": "2 hours ago",
+        "icon": "sap-icon://add-document",
+        "type": "Information"
+      },
+      {
+        "text": "Payment PAY-002 partial received from Wipro",
+        "time": "5 hours ago",
+        "icon": "sap-icon://payment-approval",
+        "type": "Success"
+      },
+      {
+        "text": "Invoice INV-2024-002 is overdue",
+        "time": "1 day ago",
+        "icon": "sap-icon://alert",
+        "type": "Error"
+      },
+      {
+        "text": "APR-006 approved by Sunil Mehta",
+        "time": "2 days ago",
+        "icon": "sap-icon://accept",
+        "type": "Success"
+      }
+    ]
+  },
+  "newOrder": {
+    "CustomerId": "",
+    "CustomerName": "",
+    "OrderDate": "",
+    "TotalAmount": 0,
+    "CreditStatus": "Pending",
+    "OrderStatus": "Draft",
+    "items": []
+  },
+  "newCustomer": {
+    "CustomerId": "",
+    "CustomerName": "",
+    "Email": "",
+    "Phone": "",
+    "Address": "",
+    "CreditLimit": 0,
+    "UsedCredit": 0,
+    "Status": "Active"
+  },
+  "editCustomer": {},
+  "selectedOrderItems": [],
+  "creditCheckResult": null
+}

@@ -5,16 +5,16 @@
     xmlns:f="sap.ui.layout.form"
     xmlns:core="sap.ui.core">
 
-    <Page title="Create Sales Order">
+    <Page title="{i18n>pageOrderCreate}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="New Sales Order" />
+                    <Title text="{i18n>pageNewOrder}" />
                 </contentLeft>
                 <contentRight>
-                    <Button text="Save Order" type="Emphasized" icon="sap-icon://save" press=".onSaveOrder" />
-                    <Button text="Discard" type="Default" press=".navBack" />
+                    <Button text="{i18n>btnSave}" type="Emphasized" icon="sap-icon://save" press=".onSaveOrder" />
+                    <Button text="{i18n>labelDiscard}" type="Default" press=".navBack" />
                 </contentRight>
             </Bar>
         </customHeader>
@@ -23,16 +23,16 @@
             <VBox class="sapUiMediumMargin">
 
                 <!-- Order Header -->
-                <Panel headerText="Order Header" expandable="false" class="sapUiSmallMarginBottom">
+                <Panel headerText="{i18n>labelOrderHeader}" expandable="false" class="sapUiSmallMarginBottom">
                     <f:SimpleForm editable="true" layout="ColumnLayout" columnsL="2" columnsM="2">
                         <f:content>
-                            <Label text="Order ID" />
+                            <Label text="{i18n>colOrderId}" />
                             <Input value="{/newOrder/OrderId}" enabled="false" />
 
-                            <Label text="Customer" required="true" />
+                            <Label text="{i18n>colCustomer}" required="true" />
                             <Select id="orderCustomer" change=".onCustomerChange"
                                     selectedKey="{/newOrder/CustomerId}">
-                                <core:Item key="" text="-- Select Customer --" />
+                                <core:Item key="" text="{i18n>selectCustomer}" />
                                 <items>
                                     <core:ListItem key="{CustomerId}" text="{CustomerName}"
                                                    additionalText="{CustomerId}"
@@ -40,45 +40,45 @@
                                 </items>
                             </Select>
 
-                            <Label text="Order Date" required="true" />
+                            <Label text="{i18n>colOrderDate}" required="true" />
                             <DatePicker id="orderDate" value="{/newOrder/OrderDate}"
                                         displayFormat="yyyy-MM-dd" valueFormat="yyyy-MM-dd" />
 
-                            <Label text="Order Status" />
+                            <Label text="{i18n>colOrderStatus}" />
                             <Input value="Draft" enabled="false" />
 
-                            <Label text="Credit Status" />
+                            <Label text="{i18n>colCreditStatus}" />
                             <Input value="Pending" enabled="false" />
                         </f:content>
                     </f:SimpleForm>
                 </Panel>
 
                 <!-- Customer Credit Info -->
-                <Panel id="creditInfoPanel" headerText="Customer Credit Information"
+                <Panel id="creditInfoPanel" headerText="{i18n>labelCustomerCreditInfo}"
                        expandable="false" class="sapUiSmallMarginBottom" visible="false">
                     <HBox class="sapUiSmallMargin" wrap="Wrap">
                         <VBox class="sapUiSmallMarginEnd">
-                            <Label text="Credit Limit" />
+                            <Label text="{i18n>colCreditLimit}" />
                             <Text text="{/newOrder/_creditLimit}" class="sapUiSmallMarginTop" />
                         </VBox>
                         <VBox class="sapUiSmallMarginEnd">
-                            <Label text="Used Credit" />
+                            <Label text="{i18n>colUsedCredit}" />
                             <Text text="{/newOrder/_usedCredit}" class="sapUiSmallMarginTop" />
                         </VBox>
                         <VBox class="sapUiSmallMarginEnd">
-                            <Label text="Available Credit" />
+                            <Label text="{i18n>colAvailable}" />
                             <Text text="{/newOrder/_availCredit}" class="sapUiSmallMarginTop" />
                         </VBox>
                     </HBox>
                 </Panel>
 
                 <!-- Order Items -->
-                <Panel headerText="Order Line Items" expandable="false" class="sapUiSmallMarginBottom">
+                <Panel headerText="{i18n>labelOrderLineItems}" expandable="false" class="sapUiSmallMarginBottom">
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="Line Items" />
+                            <Title text="{i18n>colLineItems}" />
                             <ToolbarSpacer />
-                            <Button text="Add Item" icon="sap-icon://add" type="Default" press=".onAddItem" />
+                            <Button text="{i18n>btnAddProduct}" icon="sap-icon://add" type="Default" press=".onAddItem" />
                         </Toolbar>
                     </headerToolbar>
 
@@ -86,10 +86,10 @@
                            noDataText="No items added. Click 'Add Item' to begin."
                            mode="None">
                         <columns>
-                            <Column><Text text="Product" /></Column>
-                            <Column hAlign="Center"><Text text="Quantity" /></Column>
-                            <Column hAlign="End"><Text text="Unit Price (₹)" /></Column>
-                            <Column hAlign="End"><Text text="Item Total (₹)" /></Column>
+                            <Column><Text text="{i18n>colProduct}" /></Column>
+                            <Column hAlign="Center"><Text text="{i18n>colQuantity}" /></Column>
+                            <Column hAlign="End"><Text text="Unit Price (â‚¹)" /></Column>
+                            <Column hAlign="End"><Text text="Item Total (â‚¹)" /></Column>
                             <Column hAlign="Center"><Text text="Remove" /></Column>
                         </columns>
                         <items>
@@ -123,7 +123,7 @@
 
         <!-- Add Item Dialog -->
         <dependents>
-            <Dialog id="addItemDialog" title="Add Product to Order" contentWidth="500px">
+            <Dialog id="addItemDialog" title="{i18n>dialogAddItem}" contentWidth="500px">
                 <content>
                     <VBox class="sapUiSmallMargin">
                         <Label text="Select Product" required="true" />
@@ -135,24 +135,25 @@
                         <Label text="Available Stock" />
                         <Text id="itemStock" text="-" class="sapUiSmallMarginBottom" />
 
-                        <Label text="Unit Price (₹)" />
+                        <Label text="Unit Price (â‚¹)" />
                         <Input id="itemUnitPrice" enabled="false" class="sapUiSmallMarginBottom" />
 
-                        <Label text="Quantity" required="true" />
-                        <Input id="itemQty" type="Number" placeholder="Enter quantity"
+                        <Label text="{i18n>colQuantity}" required="true" />
+                        <Input id="itemQty" type="Number" placeholder="{i18n>phQuantity}"
                                change=".onItemQtyChange" class="sapUiSmallMarginBottom" />
 
-                        <Label text="Item Total (₹)" />
+                        <Label text="Item Total (â‚¹)" />
                         <Input id="itemTotal" enabled="false" />
                     </VBox>
                 </content>
                 <beginButton>
-                    <Button text="Add to Order" type="Emphasized" press=".onConfirmAddItem" />
+                    <Button text="{i18n>btnAddToOrder}" type="Emphasized" press=".onConfirmAddItem" />
                 </beginButton>
                 <endButton>
-                    <Button text="Cancel" press=".onCancelAddItem" />
+                    <Button text="{i18n>btnCancel}" press=".onCancelAddItem" />
                 </endButton>
             </Dialog>
         </dependents>
     </Page>
 </mvc:View>
+

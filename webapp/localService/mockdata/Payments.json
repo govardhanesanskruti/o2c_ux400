@@ -1,0 +1,26 @@
+[
+  {
+    "PaymentId": "PAY-001",
+    "InvoiceId": "INV-2024-001",
+    "AmountPaid": 1250000,
+    "PaymentDate": "2024-02-10",
+    "PaymentMode": "NEFT",
+    "PaymentStatus": "Completed"
+  },
+  {
+    "PaymentId": "PAY-002",
+    "InvoiceId": "INV-2024-002",
+    "AmountPaid": 200000,
+    "PaymentDate": "2024-02-28",
+    "PaymentMode": "Cheque",
+    "PaymentStatus": "Partial"
+  },
+  {
+    "PaymentId": "PAY-003",
+    "InvoiceId": "INV-2024-003",
+    "AmountPaid": 575000,
+    "PaymentDate": "2024-03-18",
+    "PaymentMode": "RTGS",
+    "PaymentStatus": "Pending"
+  }
+]
