@@ -2,9 +2,10 @@ sap.ui.define([
     "o2c/controller/BaseController",
     "sap/ui/model/Filter",
     "sap/ui/model/FilterOperator",
+    "sap/ui/core/Fragment",
     "sap/m/MessageToast",
     "sap/m/MessageBox"
-], function (BaseController, Filter, FilterOperator, MessageToast, MessageBox) {
+], function (BaseController, Filter, FilterOperator, Fragment, MessageToast, MessageBox) {
     "use strict";
 
     return BaseController.extend("o2c.controller.Products", {
@@ -82,7 +83,56 @@ sap.ui.define([
 
         onEditProduct: function (oEvent) {
             var oProduct = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
-            MessageToast.show("Edit: " + oProduct.ProductName + " — use the dialog (extend for full edit).");
+            var oModel = this.getModel();
+            oModel.setProperty("/editProduct", jQuery.extend(true, {}, oProduct));
+
+            var that = this;
+            if (!this._oProductEditDialog) {
+                Fragment.load({
+                    id: this.getView().getId(),
+                    name: "o2c.view.fragment.ProductEditDialog",
+                    controller: this
+                }).then(function (oDialog) {
+                    that._oProductEditDialog = oDialog;
+                    that.getView().addDependent(that._oProductEditDialog);
+                    that._oProductEditDialog.open();
+                }).catch(function (err) {
+                    MessageBox.error("Failed to load edit dialog: " + (err && err.message ? err.message : err));
+                });
+            } else {
+                this._oProductEditDialog.open();
+            }
+        },
+
+        onSaveProductEdit: function () {
+            var oModel = this.getModel();
+            var oEditProduct = oModel.getProperty("/editProduct");
+            
+            if (!oEditProduct.ProductName || !oEditProduct.Price) {
+                MessageBox.error("Product Name and Price are required.");
+                return;
+            }
+            
+            var aProducts = oModel.getProperty("/products") || [];
+            var idx = aProducts.findIndex(function (p) { return p.ProductId === oEditProduct.ProductId; });
+            
+            if (idx >= 0) {
+                var nStock = parseInt(oEditProduct.Stock) || 0;
+                var sStatus = nStock === 0 ? "Out of Stock" : nStock < 5 ? "Low Stock" : "Available";
+                
+                oEditProduct.Stock = nStock;
+                oEditProduct.Status = sStatus;
+                oEditProduct.Price = parseFloat(oEditProduct.Price);
+                
+                aProducts[idx] = oEditProduct;
+                oModel.setProperty("/products", aProducts.slice());
+                this._oProductEditDialog.close();
+                MessageToast.show("Product '" + oEditProduct.ProductName + "' updated successfully!");
+            }
+        },
+
+        onCancelProductEdit: function () {
+            this._oProductEditDialog.close();
         },
 
         formatCurrency: function (val) {

@@ -26,29 +26,28 @@
 
                 <!-- Order Header Info -->
                 <Panel headerText="Order Information" expandable="false" class="sapUiSmallMarginBottom">
-                    <f:SimpleForm editable="false" layout="ColumnLayout" columnsL="3" columnsM="2">
+                    <f:SimpleForm editable="false" layout="ResponsiveGridLayout" columnsL="3" columnsM="2">
                         <f:content>
                             <Label text="Order ID" />
-                            <ObjectIdentifier title="{/selectedOrder/OrderId}" />
+                            <Text text="{/selectedOrder/OrderId}" />
 
                             <Label text="Customer" />
-                            <ObjectIdentifier title="{/selectedOrder/CustomerName}"
-                                             text="{/selectedOrder/CustomerId}" />
+                            <Text text="{/selectedOrder/CustomerName}" />
+
+                            <Label text="Customer ID" />
+                            <Text text="{/selectedOrder/CustomerId}" />
 
                             <Label text="Order Date" />
                             <Text text="{/selectedOrder/OrderDate}" />
 
                             <Label text="Total Amount" />
-                            <ObjectNumber number="{path:'/selectedOrder/TotalAmount', formatter:'.formatCurrency'}"
-                                          state="Success" emphasized="true" />
+                            <Text text="{path:'/selectedOrder/TotalAmount', formatter:'.formatCurrency'}" />
 
                             <Label text="Credit Status" />
-                            <ObjectStatus text="{/selectedOrder/CreditStatus}"
-                                          state="{path:'/selectedOrder/CreditStatus', formatter:'.formatStatusState'}" />
+                            <Text text="{/selectedOrder/CreditStatus}" />
 
                             <Label text="Order Status" />
-                            <ObjectStatus text="{/selectedOrder/OrderStatus}"
-                                          state="{path:'/selectedOrder/OrderStatus', formatter:'.formatStatusState'}" />
+                            <Text text="{/selectedOrder/OrderStatus}" />
                         </f:content>
                     </f:SimpleForm>
                 </Panel>
