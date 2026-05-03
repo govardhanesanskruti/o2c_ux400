@@ -213,7 +213,7 @@
                         <HBox wrap="Wrap" width="100%" alignItems="Start">
 
                             <!-- Recent Orders with ⑥ row highlight -->
-                            <Panel class="sapUiSmallMarginEnd sapUiSmallMarginBottom" width="65%">
+                            <Panel class="sapUiSmallMarginEnd sapUiSmallMarginBottom" width="100%">
                                 <headerToolbar>
                                     <Toolbar>
                                         <core:Icon src="sap-icon://sales-order" color="#0070F3" class="sapUiTinyMarginEnd" />
@@ -265,7 +265,7 @@
                             </Panel>
 
                             <!-- Recent Activity Feed -->
-                            <Panel width="100%" class="sapUiSmallMarginBottom">
+                            <Panel width="200%" class="sapUiSmallMarginBottom">
                                 <headerToolbar>
                                     <Toolbar>
                                         <core:Icon src="sap-icon://activity-items" color="#0070F3" class="sapUiTinyMarginEnd" />
