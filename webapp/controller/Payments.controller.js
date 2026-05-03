@@ -8,15 +8,19 @@ sap.ui.define([
 
     return BaseController.extend("o2c.controller.Payments", {
 
+        // ─── Filter ───────────────────────────────────────────────────────────────
+
         onFilterChange: function () {
-            var sStatus = this.byId("payStatusFilter").getSelectedKey();
-            var sMode = this.byId("payModeFilter").getSelectedKey();
+            var sStatus  = this.byId("payStatusFilter").getSelectedKey();
+            var sMode    = this.byId("payModeFilter").getSelectedKey();
             var oBinding = this.byId("paymentsTable").getBinding("items");
             var aFilters = [];
             if (sStatus !== "All") aFilters.push(new Filter("PaymentStatus", FilterOperator.EQ, sStatus));
-            if (sMode !== "All") aFilters.push(new Filter("PaymentMode", FilterOperator.EQ, sMode));
+            if (sMode   !== "All") aFilters.push(new Filter("PaymentMode",   FilterOperator.EQ, sMode));
             oBinding.filter(aFilters);
         },
+
+        // ─── Receipt Dialog ───────────────────────────────────────────────────────
 
         onViewReceipt: function (oEvent) {
             var oPayment = oEvent.getSource().getParent().getParent().getBindingContext().getObject();
@@ -28,7 +32,7 @@ sap.ui.define([
             this.byId("rcptStatus").setText(oPayment.PaymentStatus);
             this.byId("rcptStatus").setState(
                 oPayment.PaymentStatus === "Completed" ? "Success" :
-                oPayment.PaymentStatus === "Partial" ? "Warning" : "None"
+                oPayment.PaymentStatus === "Partial"   ? "Warning" : "None"
             );
             this.byId("receiptDialog").open();
         },
@@ -37,13 +41,17 @@ sap.ui.define([
             this.byId("receiptDialog").close();
         },
 
-        onInvoiceLink: function (oEvent) {
+        // ─── Links / Export ───────────────────────────────────────────────────────
+
+        onInvoiceLink: function () {
             this.navTo("invoices");
         },
 
         onExport: function () {
-            MessageToast.show("Export to Excel functionality - integrate sap.ui.export for production.");
+            MessageToast.show("Export to Excel — integrate sap.ui.export for production.");
         },
+
+        // ─── Formatters ───────────────────────────────────────────────────────────
 
         formatCurrency: function (val) {
             if (!val && val !== 0) return "₹0";
@@ -53,11 +61,36 @@ sap.ui.define([
         formatStatusState: function (s) {
             return BaseController.prototype.formatStatusState.call(this, s);
         },
-        getTotalPayments: function (payments) {
-            if (!payments) return 0;
 
-            const total = payments.reduce((s, p) => s + p.AmountPaid, 0);
+        // ── Tile formatters — replace the broken .reduce()/.filter() expressions ──
+
+        /**
+         * Total collected in Lakhs for scale="L" NumericContent.
+         * Replaces: {= Math.round(${/payments}.reduce(...)/100000)}
+         */
+        calcTotalCollected: function (aPayments) {
+            if (!aPayments || !aPayments.length) return 0;
+            var total = aPayments.reduce(function (s, p) { return s + (p.AmountPaid || 0); }, 0);
             return Math.round(total / 100000);
+        },
+
+        /**
+         * Count of Completed payments.
+         * Replaces: {= ${/payments}.filter(function(p){return p.PaymentStatus==='Completed';}).length}
+         */
+        calcCompletedCount: function (aPayments) {
+            if (!aPayments) return 0;
+            return aPayments.filter(function (p) { return p.PaymentStatus === "Completed"; }).length;
+        },
+
+        /**
+         * Count of Partial payments.
+         * Replaces: {= ${/payments}.filter(function(p){return p.PaymentStatus==='Partial';}).length}
+         */
+        calcPartialCount: function (aPayments) {
+            if (!aPayments) return 0;
+            return aPayments.filter(function (p) { return p.PaymentStatus === "Partial"; }).length;
         }
+
     });
 });

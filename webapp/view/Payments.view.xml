@@ -12,18 +12,18 @@
                     <Title text="Payment Records" />
                 </contentLeft>
                 <contentRight>
-                    <Select id="payStatusFilter" change=".onFilterChange">
-                        <core:Item key="All" text="All Status" />
+                    <Select id="payStatusFilter" change=".onFilterChange" class="sapUiTinyMarginEnd">
+                        <core:Item key="All"       text="All Status" />
                         <core:Item key="Completed" text="Completed" />
-                        <core:Item key="Partial" text="Partial" />
-                        <core:Item key="Pending" text="Pending" />
+                        <core:Item key="Partial"   text="Partial" />
+                        <core:Item key="Pending"   text="Pending" />
                     </Select>
                     <Select id="payModeFilter" change=".onFilterChange">
-                        <core:Item key="All" text="All Modes" />
-                        <core:Item key="NEFT" text="NEFT" />
-                        <core:Item key="RTGS" text="RTGS" />
+                        <core:Item key="All"    text="All Modes" />
+                        <core:Item key="NEFT"   text="NEFT" />
+                        <core:Item key="RTGS"   text="RTGS" />
                         <core:Item key="Cheque" text="Cheque" />
-                        <core:Item key="UPI" text="UPI" />
+                        <core:Item key="UPI"    text="UPI" />
                     </Select>
                 </contentRight>
             </Bar>
@@ -32,34 +32,68 @@
         <content>
             <VBox class="sapUiMediumMargin">
 
-                <!-- KPI -->
+                <!-- KPI Tiles -->
                 <HBox class="sapUiSmallMarginBottom" wrap="Wrap">
-                    <GenericTile class="sapUiSmallMarginEnd" header="Total Collected">
-                        <TileContent unit="INR">
-                            <NumericContent value="{path: '/payments', formatter: '.getTotalPayments'}"
-                scale="L" valueColor="Good" />
-                        </TileContent>
+
+                    <GenericTile header="Total Collected" subheader="All payments"
+                                 backgroundColor="#107E3E"
+                                 class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <tileContent>
+                            <TileContent unit="INR">
+                                <!--
+                                    FIX: .reduce() inside expression binding crashes UI5 parser.
+                                    Use formatter function in controller instead.
+                                -->
+                                <NumericContent
+                                    value="{path:'/payments', formatter:'.calcTotalCollected'}"
+                                    scale="L" valueColor="Good" withMargin="false" />
+                            </TileContent>
+                        </tileContent>
                     </GenericTile>
-                    <GenericTile class="sapUiSmallMarginEnd" header="Completed Payments">
-                        <TileContent>
-                            <NumericContent value="{= ${/payments}.filter(function(p){return p.PaymentStatus==='Completed';}).length}"
-                                            valueColor="Good" />
-                        </TileContent>
+
+                    <GenericTile header="Completed Payments" subheader="Fully paid"
+                                 backgroundColor="#0057A8"
+                                 class="sapUiSmallMarginEnd sapUiSmallMarginBottom">
+                        <tileContent>
+                            <TileContent unit="Payments">
+                                <!--
+                                    FIX: .filter() inside expression binding crashes UI5 parser.
+                                    Use formatter function in controller instead.
+                                -->
+                                <NumericContent
+                                    value="{path:'/payments', formatter:'.calcCompletedCount'}"
+                                    valueColor="Good" withMargin="false" />
+                            </TileContent>
+                        </tileContent>
                     </GenericTile>
-                    <GenericTile header="Partial Payments">
-                        <TileContent>
-                            <NumericContent value="{= ${/payments}.filter(function(p){return p.PaymentStatus==='Partial';}).length}"
-                                            valueColor="Critical" />
-                        </TileContent>
+
+                    <GenericTile header="Partial Payments" subheader="Pending balance"
+                                 backgroundColor="#E76500"
+                                 class="sapUiSmallMarginBottom">
+                        <tileContent>
+                            <TileContent unit="Payments">
+                                <!--
+                                    FIX: .filter() inside expression binding crashes UI5 parser.
+                                    Use formatter function in controller instead.
+                                -->
+                                <NumericContent
+                                    value="{path:'/payments', formatter:'.calcPartialCount'}"
+                                    valueColor="Critical" withMargin="false" />
+                            </TileContent>
+                        </tileContent>
                     </GenericTile>
+
                 </HBox>
 
+                <!-- Payments Table — all row-level bindings were fine, kept as-is -->
                 <Table id="paymentsTable" items="{/payments}"
                        noDataText="No payment records found."
-                       growing="true" growingThreshold="15">
+                       growing="true" growingThreshold="15"
+                       alternateRowColors="true" showSeparators="Inner">
                     <headerToolbar>
                         <Toolbar>
-                            <Title text="Payment Records ({= ${/payments} ? ${/payments}.length : 0})" />
+                            <core:Icon src="sap-icon://payment-approval" color="#0070F3" class="sapUiTinyMarginEnd" />
+                            <Title text="Payment Records" />
                             <ToolbarSpacer />
                             <Button text="Export" icon="sap-icon://excel-attachment"
                                     type="Default" press=".onExport" />
@@ -70,12 +104,13 @@
                         <Column><Text text="Invoice ID" /></Column>
                         <Column hAlign="End"><Text text="Amount Paid (₹)" /></Column>
                         <Column><Text text="Payment Date" /></Column>
-                        <Column hAlign="Center"><Text text="Payment Mode" /></Column>
+                        <Column hAlign="Center"><Text text="Mode" /></Column>
                         <Column hAlign="Center"><Text text="Status" /></Column>
                         <Column hAlign="Center"><Text text="Actions" /></Column>
                     </columns>
                     <items>
-                        <ColumnListItem type="Active">
+                        <ColumnListItem type="Active"
+                            highlight="{path:'PaymentStatus', formatter:'.formatStatusState'}">
                             <cells>
                                 <ObjectIdentifier title="{PaymentId}" />
                                 <Link text="{InvoiceId}" press=".onInvoiceLink" />
@@ -84,41 +119,38 @@
                                 <Text text="{PaymentDate}" />
                                 <ObjectAttribute text="{PaymentMode}" />
                                 <ObjectStatus text="{PaymentStatus}"
-                                              state="{path:'PaymentStatus', formatter:'.formatStatusState'}" />
+                                              state="{path:'PaymentStatus', formatter:'.formatStatusState'}"
+                                              inverted="true" />
                                 <Button icon="sap-icon://receipt" tooltip="View Receipt"
                                         type="Transparent" press=".onViewReceipt" />
                             </cells>
                         </ColumnListItem>
                     </items>
                 </Table>
+
             </VBox>
         </content>
 
-        <!-- Receipt Dialog -->
+        <!-- Receipt Dialog — unchanged -->
         <dependents>
             <Dialog id="receiptDialog" title="Payment Receipt" contentWidth="420px">
                 <content>
                     <VBox class="sapUiMediumMargin">
                         <Title text="Payment Receipt" titleStyle="H4" class="sapUiSmallMarginBottom" />
                         <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
-                            <Label text="Payment ID:" />
-                            <Text id="rcptPayId" text="" />
+                            <Label text="Payment ID:" /><Text id="rcptPayId" text="" />
                         </HBox>
                         <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
-                            <Label text="Invoice ID:" />
-                            <Text id="rcptInvId" text="" />
+                            <Label text="Invoice ID:" /><Text id="rcptInvId" text="" />
                         </HBox>
                         <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
-                            <Label text="Amount Paid:" />
-                            <Text id="rcptAmt" text="" />
+                            <Label text="Amount Paid:" /><Text id="rcptAmt" text="" />
                         </HBox>
                         <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
-                            <Label text="Payment Date:" />
-                            <Text id="rcptDate" text="" />
+                            <Label text="Payment Date:" /><Text id="rcptDate" text="" />
                         </HBox>
                         <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
-                            <Label text="Payment Mode:" />
-                            <Text id="rcptMode" text="" />
+                            <Label text="Payment Mode:" /><Text id="rcptMode" text="" />
                         </HBox>
                         <HBox justifyContent="SpaceBetween">
                             <Label text="Status:" />
@@ -131,5 +163,6 @@
                 </endButton>
             </Dialog>
         </dependents>
+
     </Page>
 </mvc:View>

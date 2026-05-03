@@ -13,7 +13,7 @@ sap.ui.define([
 
         createMainModel: function () {
             var oData = {
-                currentUser: { name: "Rajesh Kumar", role: "Sales Manager", avatar: "RK" },
+                currentUser: { name: "Sanskruti Govardhane", role: "Sales Manager", avatar: "SG" },
                 customers: [
                     { CustomerId: "C001", CustomerName: "Tata Consultancy Services", Email: "procurement@tcs.com", Phone: "+91-22-6778-9999", Address: "TCS House, Raveline St, Fort, Mumbai 400001", CreditLimit: 5000000, UsedCredit: 1200000, Status: "Active" },
                     { CustomerId: "C002", CustomerName: "Infosys Limited", Email: "vendor@infosys.com", Phone: "+91-80-2852-0261", Address: "Electronics City, Hosur Rd, Bengaluru 560100", CreditLimit: 3000000, UsedCredit: 2900000, Status: "Active" },
