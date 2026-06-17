@@ -4,22 +4,22 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <Page title="Payments">
+    <Page title="{i18n>pagePayments}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Payment Records" />
+                    <Title text="{i18n>pagePaymentRecords}" />
                 </contentLeft>
                 <contentRight>
                     <Select id="payStatusFilter" change=".onFilterChange" class="sapUiTinyMarginEnd">
-                        <core:Item key="All"       text="All Status" />
-                        <core:Item key="Completed" text="Completed" />
-                        <core:Item key="Partial"   text="Partial" />
-                        <core:Item key="Pending"   text="Pending" />
+                        <core:Item key="All"       text="{i18n>statusAll}" />
+                        <core:Item key="Completed" text="{i18n>statusCompleted}" />
+                        <core:Item key="Partial"   text="{i18n>statusPartial}" />
+                        <core:Item key="Pending"   text="{i18n>statusPending}" />
                     </Select>
                     <Select id="payModeFilter" change=".onFilterChange">
-                        <core:Item key="All"    text="All Modes" />
+                        <core:Item key="All"    text="{i18n>allModes}" />
                         <core:Item key="NEFT"   text="NEFT" />
                         <core:Item key="RTGS"   text="RTGS" />
                         <core:Item key="Cheque" text="Cheque" />
@@ -85,28 +85,28 @@
 
                 </HBox>
 
-                <!-- Payments Table — all row-level bindings were fine, kept as-is -->
+                <!-- Payments Table â€” all row-level bindings were fine, kept as-is -->
                 <Table id="paymentsTable" items="{/payments}"
-                       noDataText="No payment records found."
+                       noDataText="{i18n>noPayments}"
                        growing="true" growingThreshold="15"
                        alternateRowColors="true" showSeparators="Inner">
                     <headerToolbar>
                         <Toolbar>
                             <core:Icon src="sap-icon://payment-approval" color="#0070F3" class="sapUiTinyMarginEnd" />
-                            <Title text="Payment Records" />
+                            <Title text="{i18n>pagePaymentRecords}" />
                             <ToolbarSpacer />
-                            <Button text="Export" icon="sap-icon://excel-attachment"
+                            <Button text="{i18n>btnExport}" icon="sap-icon://excel-attachment"
                                     type="Default" press=".onExport" />
                         </Toolbar>
                     </headerToolbar>
                     <columns>
-                        <Column><Text text="Payment ID" /></Column>
-                        <Column><Text text="Invoice ID" /></Column>
-                        <Column hAlign="End"><Text text="Amount Paid (₹)" /></Column>
-                        <Column><Text text="Payment Date" /></Column>
-                        <Column hAlign="Center"><Text text="Mode" /></Column>
-                        <Column hAlign="Center"><Text text="Status" /></Column>
-                        <Column hAlign="Center"><Text text="Actions" /></Column>
+                        <Column><Text text="{i18n>colPaymentId}" /></Column>
+                        <Column><Text text="{i18n>colInvoiceId}" /></Column>
+                        <Column hAlign="End"><Text text="Amount Paid (â‚¹)" /></Column>
+                        <Column><Text text="{i18n>colPaymentDate}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colMode}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colStatus}" /></Column>
+                        <Column hAlign="Center"><Text text="{i18n>colActions}" /></Column>
                     </columns>
                     <items>
                         <ColumnListItem type="Active"
@@ -121,7 +121,7 @@
                                 <ObjectStatus text="{PaymentStatus}"
                                               state="{path:'PaymentStatus', formatter:'.formatStatusState'}"
                                               inverted="true" />
-                                <Button icon="sap-icon://receipt" tooltip="View Receipt"
+                                <Button icon="sap-icon://receipt" tooltip="{i18n>tooltipViewReceipt}"
                                         type="Transparent" press=".onViewReceipt" />
                             </cells>
                         </ColumnListItem>
@@ -131,12 +131,12 @@
             </VBox>
         </content>
 
-        <!-- Receipt Dialog — unchanged -->
+        <!-- Receipt Dialog â€” unchanged -->
         <dependents>
-            <Dialog id="receiptDialog" title="Payment Receipt" contentWidth="420px">
+            <Dialog id="receiptDialog" title="{i18n>dialogPaymentReceipt}" contentWidth="420px">
                 <content>
                     <VBox class="sapUiMediumMargin">
-                        <Title text="Payment Receipt" titleStyle="H4" class="sapUiSmallMarginBottom" />
+                        <Title text="{i18n>dialogPaymentReceipt}" titleStyle="H4" class="sapUiSmallMarginBottom" />
                         <HBox justifyContent="SpaceBetween" class="sapUiSmallMarginBottom">
                             <Label text="Payment ID:" /><Text id="rcptPayId" text="" />
                         </HBox>
@@ -159,10 +159,11 @@
                     </VBox>
                 </content>
                 <endButton>
-                    <Button text="Close" press=".onCloseReceipt" />
+                    <Button text="{i18n>btnClose}" press=".onCloseReceipt" />
                 </endButton>
             </Dialog>
         </dependents>
 
     </Page>
 </mvc:View>
+

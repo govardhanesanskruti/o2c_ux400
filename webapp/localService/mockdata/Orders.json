@@ -1,0 +1,56 @@
+[
+  {
+    "OrderId": "ORD-2024-001",
+    "CustomerId": "C001",
+    "CustomerName": "Tata Consultancy Services",
+    "OrderDate": "2024-01-15",
+    "TotalAmount": 1250000,
+    "CreditStatus": "Approved",
+    "OrderStatus": "Delivered"
+  },
+  {
+    "OrderId": "ORD-2024-002",
+    "CustomerId": "C002",
+    "CustomerName": "Infosys Limited",
+    "OrderDate": "2024-01-22",
+    "TotalAmount": 850000,
+    "CreditStatus": "Pending",
+    "OrderStatus": "Pending Approval"
+  },
+  {
+    "OrderId": "ORD-2024-003",
+    "CustomerId": "C003",
+    "CustomerName": "Wipro Technologies",
+    "OrderDate": "2024-02-01",
+    "TotalAmount": 450000,
+    "CreditStatus": "Approved",
+    "OrderStatus": "Processing"
+  },
+  {
+    "OrderId": "ORD-2024-004",
+    "CustomerId": "C004",
+    "CustomerName": "HCL Technologies",
+    "OrderDate": "2024-02-10",
+    "TotalAmount": 200000,
+    "CreditStatus": "Rejected",
+    "OrderStatus": "Cancelled"
+  },
+  {
+    "OrderId": "ORD-2024-005",
+    "CustomerId": "C005",
+    "CustomerName": "Tech Mahindra",
+    "OrderDate": "2024-02-18",
+    "TotalAmount": 575000,
+    "CreditStatus": "Approved",
+    "OrderStatus": "Shipped"
+  },
+  {
+    "OrderId": "ORD-2024-006",
+    "CustomerId": "C006",
+    "CustomerName": "Larsen & Toubro",
+    "OrderDate": "2024-03-01",
+    "TotalAmount": 3200000,
+    "CreditStatus": "Approved",
+    "OrderStatus": "Processing"
+  }
+]

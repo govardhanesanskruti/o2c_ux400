@@ -100,7 +100,9 @@ sap.ui.define([
                 creditCheckResult: null
             };
 
-            return new JSONModel(oData);
+            var oModel = new JSONModel(oData);
+            oModel.loadData(sap.ui.require.toUrl("o2c/localService/mockdata/appData.json"), null, true);
+            return oModel;
         }
     };
 });

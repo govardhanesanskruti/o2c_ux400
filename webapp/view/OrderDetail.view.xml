@@ -4,18 +4,18 @@
     xmlns="sap.m"
     xmlns:f="sap.ui.layout.form">
 
-    <Page title="Order Detail" showNavButton="true" navButtonPress=".navBack">
+    <Page title="{i18n>pageOrderDetail}" showNavButton="true" navButtonPress=".navBack">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Order Detail - {/selectedOrder/OrderId}" />
+                    <Title text="{= ${i18n>pageOrderDetail} + ' - ' + ${/selectedOrder/OrderId} }" />
                 </contentLeft>
                 <contentRight>
-                    <Button text="Generate Invoice" icon="sap-icon://invoice" type="Emphasized"
+                    <Button text="{i18n>btnGenerateInvoice}" icon="sap-icon://invoice" type="Emphasized"
                             press=".onGenerateInvoice"
                             visible="{= ${/selectedOrder/OrderStatus} === 'Delivered' || ${/selectedOrder/OrderStatus} === 'Processing'}" />
-                    <Button text="Update Status" icon="sap-icon://process" type="Default"
+                    <Button text="{i18n>btnUpdateStatus}" icon="sap-icon://process" type="Default"
                             press=".onUpdateStatus" />
                 </contentRight>
             </Bar>
@@ -25,44 +25,43 @@
             <VBox class="sapUiMediumMargin">
 
                 <!-- Order Header Info -->
-                <Panel headerText="Order Information" expandable="false" class="sapUiSmallMarginBottom">
-                    <f:SimpleForm editable="false" layout="ColumnLayout" columnsL="3" columnsM="2">
+                <Panel headerText="{i18n>labelOrderHeader}" expandable="false" class="sapUiSmallMarginBottom">
+                    <f:SimpleForm editable="false" layout="ResponsiveGridLayout" columnsL="3" columnsM="2">
                         <f:content>
-                            <Label text="Order ID" />
-                            <ObjectIdentifier title="{/selectedOrder/OrderId}" />
+                            <Label text="{i18n>colOrderId}" />
+                            <Text text="{/selectedOrder/OrderId}" />
 
-                            <Label text="Customer" />
-                            <ObjectIdentifier title="{/selectedOrder/CustomerName}"
-                                             text="{/selectedOrder/CustomerId}" />
+                            <Label text="{i18n>colCustomer}" />
+                            <Text text="{/selectedOrder/CustomerName}" />
 
-                            <Label text="Order Date" />
+                            <Label text="{i18n>colCustomerId}" />
+                            <Text text="{/selectedOrder/CustomerId}" />
+
+                            <Label text="{i18n>colOrderDate}" />
                             <Text text="{/selectedOrder/OrderDate}" />
 
-                            <Label text="Total Amount" />
-                            <ObjectNumber number="{path:'/selectedOrder/TotalAmount', formatter:'.formatCurrency'}"
-                                          state="Success" emphasized="true" />
+                            <Label text="{i18n>colTotalAmount}" />
+                            <Text text="{path:'/selectedOrder/TotalAmount', formatter:'.formatCurrency'}" />
 
-                            <Label text="Credit Status" />
-                            <ObjectStatus text="{/selectedOrder/CreditStatus}"
-                                          state="{path:'/selectedOrder/CreditStatus', formatter:'.formatStatusState'}" />
+                            <Label text="{i18n>colCreditStatus}" />
+                            <Text text="{/selectedOrder/CreditStatus}" />
 
-                            <Label text="Order Status" />
-                            <ObjectStatus text="{/selectedOrder/OrderStatus}"
-                                          state="{path:'/selectedOrder/OrderStatus', formatter:'.formatStatusState'}" />
+                            <Label text="{i18n>colOrderStatus}" />
+                            <Text text="{/selectedOrder/OrderStatus}" />
                         </f:content>
                     </f:SimpleForm>
                 </Panel>
 
                 <!-- Order Items -->
-                <Panel headerText="Line Items" expandable="false" class="sapUiSmallMarginBottom">
+                <Panel headerText="{i18n>colLineItems}" expandable="false" class="sapUiSmallMarginBottom">
                     <Table id="orderItemsTable" items="{/selectedOrderItems}"
-                           noDataText="No items for this order">
+                           noDataText="{i18n>noItemsForOrder}">
                         <columns>
-                            <Column><Text text="Item ID" /></Column>
-                            <Column><Text text="Product" /></Column>
-                            <Column hAlign="Center"><Text text="Quantity" /></Column>
-                            <Column hAlign="End"><Text text="Unit Price" /></Column>
-                            <Column hAlign="End"><Text text="Item Total" /></Column>
+                            <Column><Text text="{i18n>colItemId}" /></Column>
+                            <Column><Text text="{i18n>colProduct}" /></Column>
+                            <Column hAlign="Center"><Text text="{i18n>colQuantity}" /></Column>
+                            <Column hAlign="End"><Text text="{i18n>colUnitPrice}" /></Column>
+                            <Column hAlign="End"><Text text="{i18n>colItemTotal}" /></Column>
                         </columns>
                         <items>
                             <ColumnListItem>
@@ -80,14 +79,14 @@
                 </Panel>
 
                 <!-- Approval Info -->
-                <Panel headerText="Approval History" expandable="false" class="sapUiSmallMarginBottom">
-                    <Table items="{/selectedApproval}" noDataText="No approval record">
+                <Panel headerText="{i18n>pageApprovals}" expandable="false" class="sapUiSmallMarginBottom">
+                    <Table items="{/selectedApproval}" noDataText="{i18n>noApprovalRecord}">
                         <columns>
-                            <Column><Text text="Approval ID" /></Column>
-                            <Column><Text text="Decision" /></Column>
-                            <Column><Text text="Remarks" /></Column>
-                            <Column><Text text="Approved By" /></Column>
-                            <Column><Text text="Approved On" /></Column>
+                            <Column><Text text="{i18n>colApprovalId}" /></Column>
+                            <Column><Text text="{i18n>colDecision}" /></Column>
+                            <Column><Text text="{i18n>colRemarks}" /></Column>
+                            <Column><Text text="{i18n>colApprovedBy}" /></Column>
+                            <Column><Text text="{i18n>colApprovedOn}" /></Column>
                         </columns>
                         <items>
                             <ColumnListItem>
@@ -109,27 +108,28 @@
 
         <!-- Update Status Dialog -->
         <dependents>
-            <Dialog id="updateStatusDialog" title="Update Order Status" contentWidth="400px">
+            <Dialog id="updateStatusDialog" title="{i18n>dialogUpdateOrderStatus}" contentWidth="400px">
                 <content>
                     <VBox class="sapUiSmallMargin">
-                        <Label text="New Status" required="true" />
+                        <Label text="{i18n>labelNewStatus}" required="true" />
                         <Select id="newStatusSelect" class="sapUiSmallMarginBottom">
-                            <core:Item xmlns:core="sap.ui.core" key="Processing" text="Processing" />
-                            <core:Item xmlns:core="sap.ui.core" key="Shipped" text="Shipped" />
-                            <core:Item xmlns:core="sap.ui.core" key="Delivered" text="Delivered" />
-                            <core:Item xmlns:core="sap.ui.core" key="Cancelled" text="Cancelled" />
+                            <core:Item xmlns:core="sap.ui.core" key="Processing" text="{i18n>statusProcessing}" />
+                            <core:Item xmlns:core="sap.ui.core" key="Shipped" text="{i18n>statusShipped}" />
+                            <core:Item xmlns:core="sap.ui.core" key="Delivered" text="{i18n>statusDelivered}" />
+                            <core:Item xmlns:core="sap.ui.core" key="Cancelled" text="{i18n>statusCancelled}" />
                         </Select>
-                        <Label text="Remarks" />
-                        <TextArea id="statusRemarks" rows="3" placeholder="Enter remarks..." />
+                        <Label text="{i18n>colRemarks}" />
+                        <TextArea id="statusRemarks" rows="3" placeholder="{i18n>phRemarks}" />
                     </VBox>
                 </content>
                 <beginButton>
-                    <Button text="Update" type="Emphasized" press=".onConfirmStatusUpdate" />
+                    <Button text="{i18n>btnUpdate}" type="Emphasized" press=".onConfirmStatusUpdate" />
                 </beginButton>
                 <endButton>
-                    <Button text="Cancel" press=".onCancelStatusUpdate" />
+                    <Button text="{i18n>btnCancel}" press=".onCancelStatusUpdate" />
                 </endButton>
             </Dialog>
         </dependents>
     </Page>
 </mvc:View>
+

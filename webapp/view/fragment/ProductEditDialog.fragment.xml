@@ -1,0 +1,111 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:f="sap.ui.layout.form">
+
+    <Dialog
+        id="productEditDialog"
+        title="Edit Product â€” {/editProduct/ProductId}"
+        contentWidth="640px"
+        draggable="true"
+        resizable="true"
+        state="None">
+
+        <content>
+            <VBox class="sapUiSmallMarginBeginEnd sapUiSmallMarginTopBottom">
+
+                <f:SimpleForm
+                    editable="true"
+                    layout="ResponsiveGridLayout"
+                    columnsL="2"
+                    columnsM="2"
+                    columnsXL="2"
+                    labelSpanL="12"
+                    labelSpanM="12">
+                    <f:content>
+
+                        <Label text="{i18n>colProductId}" />
+                        <Input value="{/editProduct/ProductId}" enabled="false" />
+
+                        <Label text="{i18n>colProductName}" required="true" />
+                        <Input
+                            id="editProdName"
+                            value="{/editProduct/ProductName}"
+                            placeholder="{i18n>phEnterProductName}" />
+
+                        <Label text="{i18n>colCategory}" required="true" />
+                        <Select
+                            id="editProdCategory"
+                            selectedKey="{/editProduct/Category}">
+                            <core:Item key="Software" text="Software" />
+                            <core:Item key="Hardware" text="Hardware" />
+                            <core:Item key="Services" text="Services" />
+                        </Select>
+
+                        <Label text="Unit Price (â‚¹)" required="true" />
+                        <Input
+                            id="editProdPrice"
+                            value="{/editProduct/Price}"
+                            type="Number"
+                            placeholder="{i18n>phUnitPrice}" />
+
+                        <Label text="{i18n>colStockQuantity}" required="true" />
+                        <Input
+                            id="editProdStock"
+                            value="{/editProduct/Stock}"
+                            type="Number"
+                            placeholder="{i18n>phStockQuantity}" />
+
+                        <Label text="{i18n>colStatus}" />
+                        <Select
+                            id="editProdStatus"
+                            selectedKey="{/editProduct/Status}">
+                            <core:Item key="Available" text="{i18n>statusAvailable}" />
+                            <core:Item key="Low Stock" text="{i18n>statusLowStock}" />
+                            <core:Item key="Out of Stock" text="{i18n>statusOutOfStock}" />
+                            <core:Item key="Discontinued" text="{i18n>statusDiscontinued}" />
+                        </Select>
+
+                        <Label text="{i18n>labelDescription}" />
+                        <TextArea
+                            id="editProdDescription"
+                            value="{/editProduct/Description}"
+                            rows="3"
+                            placeholder="{i18n>phEnterProductDescription}" />
+
+                    </f:content>
+                </f:SimpleForm>
+
+                <!-- Stock Status Panel -->
+                <Panel headerText="{i18n>labelStockStatus}" class="sapUiSmallMarginTop">
+                    <HBox class="sapUiSmallMargin" alignItems="Center">
+                        <VBox width="100%">
+                            <HBox justifyContent="SpaceBetween" class="sapUiTinyMarginBottom">
+                                <Label text="Available Stock: {/editProduct/Stock} units" />
+                            </HBox>
+                            <ObjectStatus 
+                                text="{/editProduct/Status}" 
+                                state="{path:'/editProduct/Status', formatter:'.formatStatusState'}" />
+                        </VBox>
+                    </HBox>
+                </Panel>
+
+            </VBox>
+        </content>
+
+        <beginButton>
+            <Button
+                text="{i18n>btnSaveChanges}"
+                type="Emphasized"
+                press=".onSaveProductEdit" />
+        </beginButton>
+        <endButton>
+            <Button
+                text="{i18n>btnCancel}"
+                press=".onCancelProductEdit" />
+        </endButton>
+    </Dialog>
+
+</core:FragmentDefinition>
+
+

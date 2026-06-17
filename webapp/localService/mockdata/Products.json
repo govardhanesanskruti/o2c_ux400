@@ -1,0 +1,66 @@
+[
+  {
+    "ProductId": "P001",
+    "ProductName": "SAP S/4HANA License",
+    "Category": "Software",
+    "Price": 250000,
+    "Stock": 999,
+    "Status": "Available"
+  },
+  {
+    "ProductId": "P002",
+    "ProductName": "Enterprise Server Rack",
+    "Category": "Hardware",
+    "Price": 850000,
+    "Stock": 15,
+    "Status": "Available"
+  },
+  {
+    "ProductId": "P003",
+    "ProductName": "Network Switch 48-Port",
+    "Category": "Hardware",
+    "Price": 45000,
+    "Stock": 50,
+    "Status": "Available"
+  },
+  {
+    "ProductId": "P004",
+    "ProductName": "Cloud Storage 10TB",
+    "Category": "Services",
+    "Price": 120000,
+    "Stock": 200,
+    "Status": "Available"
+  },
+  {
+    "ProductId": "P005",
+    "ProductName": "SAP Fiori Implementation",
+    "Category": "Services",
+    "Price": 500000,
+    "Stock": 999,
+    "Status": "Available"
+  },
+  {
+    "ProductId": "P006",
+    "ProductName": "Database Oracle License",
+    "Category": "Software",
+    "Price": 350000,
+    "Stock": 999,
+    "Status": "Available"
+  },
+  {
+    "ProductId": "P007",
+    "ProductName": "Laptop HP EliteBook",
+    "Category": "Hardware",
+    "Price": 95000,
+    "Stock": 3,
+    "Status": "Low Stock"
+  },
+  {
+    "ProductId": "P008",
+    "ProductName": "Cybersecurity Suite",
+    "Category": "Software",
+    "Price": 180000,
+    "Stock": 0,
+    "Status": "Out of Stock"
+  }
+]

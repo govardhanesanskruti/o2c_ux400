@@ -4,18 +4,18 @@
     xmlns="sap.m"
     xmlns:core="sap.ui.core">
 
-    <Page title="Product Master">
+    <Page title="{i18n>pageProducts}">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <Button icon="sap-icon://nav-back" press=".navBack" />
-                    <Title text="Product Master Data" />
+                    <Title text="{i18n>pageProductMasterData}" />
                 </contentLeft>
                 <contentRight>
-                    <SearchField placeholder="Search products..." search=".onSearch"
+                    <SearchField placeholder="{i18n>searchProducts}" search=".onSearch"
                                  liveChange=".onSearch" width="250px" />
                     <Select id="categoryFilter" change=".onCategoryFilter">
-                        <core:Item key="All" text="All Categories" />
+                        <core:Item key="All" text="{i18n>allCategories}" />
                         <core:Item key="Software" text="Software" />
                         <core:Item key="Hardware" text="Hardware" />
                         <core:Item key="Services" text="Services" />
@@ -26,24 +26,24 @@
 
         <content>
             <Table id="productTable" items="{/products}"
-                   noDataText="No products found"
+                   noDataText="{i18n>noProducts}"
                    growing="true" growingThreshold="10">
                 <headerToolbar>
                     <Toolbar>
                         <Title text="Products ({= ${/products} ? ${/products}.length : 0})" />
                         <ToolbarSpacer />
-                        <Button text="Add Product" icon="sap-icon://add" type="Emphasized"
+                        <Button text="{i18n>btnAddProduct}" icon="sap-icon://add" type="Emphasized"
                                 press=".onAddProduct" />
                     </Toolbar>
                 </headerToolbar>
                 <columns>
-                    <Column width="8rem"><Text text="Product ID" /></Column>
-                    <Column><Text text="Product Name" /></Column>
-                    <Column><Text text="Category" /></Column>
-                    <Column hAlign="End"><Text text="Unit Price (₹)" /></Column>
-                    <Column hAlign="Center"><Text text="Stock" /></Column>
-                    <Column hAlign="Center"><Text text="Status" /></Column>
-                    <Column hAlign="Center"><Text text="Actions" /></Column>
+                    <Column width="8rem"><Text text="{i18n>colProductId}" /></Column>
+                    <Column><Text text="{i18n>colProductName}" /></Column>
+                    <Column><Text text="{i18n>colCategory}" /></Column>
+                    <Column hAlign="End"><Text text="Unit Price (â‚¹)" /></Column>
+                    <Column hAlign="Center"><Text text="{i18n>colStock}" /></Column>
+                    <Column hAlign="Center"><Text text="{i18n>colStatus}" /></Column>
+                    <Column hAlign="Center"><Text text="{i18n>colActions}" /></Column>
                 </columns>
                 <items>
                     <ColumnListItem type="Active">
@@ -66,30 +66,31 @@
 
         <!-- Add Product Dialog -->
         <dependents>
-            <Dialog id="addProductDialog" title="Add New Product" contentWidth="500px">
+            <Dialog id="addProductDialog" title="{i18n>dialogAddProduct}" contentWidth="500px">
                 <content>
                     <VBox class="sapUiSmallMargin">
-                        <Label text="Product Name" required="true" />
-                        <Input id="newProdName" placeholder="Product name" class="sapUiSmallMarginBottom" />
-                        <Label text="Category" required="true" />
+                        <Label text="{i18n>colProductName}" required="true" />
+                        <Input id="newProdName" placeholder="{i18n>phProductName}" class="sapUiSmallMarginBottom" />
+                        <Label text="{i18n>colCategory}" required="true" />
                         <Select id="newProdCategory" class="sapUiSmallMarginBottom">
                             <core:Item key="Software" text="Software" />
                             <core:Item key="Hardware" text="Hardware" />
                             <core:Item key="Services" text="Services" />
                         </Select>
-                        <Label text="Unit Price (₹)" required="true" />
+                        <Label text="Unit Price (â‚¹)" required="true" />
                         <Input id="newProdPrice" type="Number" placeholder="0" class="sapUiSmallMarginBottom" />
-                        <Label text="Stock Quantity" required="true" />
+                        <Label text="{i18n>colStockQuantity}" required="true" />
                         <Input id="newProdStock" type="Number" placeholder="0" class="sapUiSmallMarginBottom" />
                     </VBox>
                 </content>
                 <beginButton>
-                    <Button text="Save" type="Emphasized" press=".onSaveProduct" />
+                    <Button text="{i18n>btnSave}" type="Emphasized" press=".onSaveProduct" />
                 </beginButton>
                 <endButton>
-                    <Button text="Cancel" press=".onCancelProduct" />
+                    <Button text="{i18n>btnCancel}" press=".onCancelProduct" />
                 </endButton>
             </Dialog>
         </dependents>
     </Page>
 </mvc:View>
+
